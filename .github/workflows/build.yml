@@ -1,0 +1,59 @@
+name: Monorepo Build & Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # NX için gerekli
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup NX cache
+        uses: nrwl/nx-set-shas@v3
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Biome Check
+        run: pnpm biome:check
+
+      - name: Run Type Check
+        run: pnpm test:type
+
+      - name: Run Tests
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      # Opsiyonel: Release için
+      - name: Test Release
+        if: github.ref == 'refs/heads/main'
+        run: pnpm release:test
+
+      # Opsiyonel: Artifact Upload
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: |
+            packages/*/dist
+            plugins/*/dist
