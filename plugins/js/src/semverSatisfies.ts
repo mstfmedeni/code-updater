@@ -4,12 +4,12 @@ export const semverSatisfies = (
   targetAppVersion: string,
   currentVersion: string,
 ) => {
-  const [targetBase, targetBuild] = targetAppVersion.split('+');
-  const [currentBase, currentBuild] = currentVersion.split('+');
-  
+  const [targetBase, targetBuild] = targetAppVersion.split("+");
+  const [currentBase, currentBuild] = currentVersion.split("+");
+
   const currentCoerce = semver.coerce(currentBase);
   const targetCoerce = semver.coerce(targetBase);
-  
+
   if (!currentCoerce || !targetCoerce) {
     return false;
   }
@@ -17,22 +17,22 @@ export const semverSatisfies = (
   const isExactVersion = currentCoerce.version === targetCoerce.version;
 
   if (isExactVersion) {
-    const targetBuildStr = targetBuild || '0';
-    const currentBuildStr = currentBuild || '0';
+    const targetBuildStr = targetBuild || "0";
+    const currentBuildStr = currentBuild || "0";
 
-    if (targetBuildStr.includes('x')) {
+    if (targetBuildStr.includes("x")) {
       const pattern = targetBuildStr
-        .replace(/x/gi, '\\d') 
-        .replace(/\d/g, match => match); 
-      
+        .replace(/x/gi, "\\d")
+        .replace(/\d/g, (match) => match);
+
       const regex = new RegExp(`^${pattern}$`);
       return regex.test(currentBuildStr);
     }
 
-    const targetBuildNum = parseInt(targetBuildStr, 10);
-    const currentBuildNum = parseInt(currentBuildStr, 10);
-    
-    if (isNaN(targetBuildNum) || isNaN(currentBuildNum)) {
+    const targetBuildNum = Number.parseInt(targetBuildStr, 10);
+    const currentBuildNum = Number.parseInt(currentBuildStr, 10);
+
+    if (Number.isNaN(targetBuildNum) || Number.isNaN(currentBuildNum)) {
       return false;
     }
 

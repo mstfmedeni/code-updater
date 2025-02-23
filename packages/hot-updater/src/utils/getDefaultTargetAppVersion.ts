@@ -62,7 +62,12 @@ export const getAndroidVersion = async (
   cwd: string,
 ): Promise<string | null> => {
   const buildGradlePath = path.join(cwd, "android", "app", "build.gradle");
-  const versionPropertiesPath = path.join(cwd, "android", "app", "version.properties");
+  const versionPropertiesPath = path.join(
+    cwd,
+    "android",
+    "app",
+    "version.properties",
+  );
   try {
     const buildGradleContent = await fs.readFile(buildGradlePath, "utf8");
     const versionNameMatch = buildGradleContent.match(
@@ -71,15 +76,18 @@ export const getAndroidVersion = async (
 
     if (!versionNameMatch?.[1]) return null;
     const versionCodeMatch = buildGradleContent.match(
-      /versionCode\s+([^}\n]+)/
+      /versionCode\s+([^}\n]+)/,
     );
     if (versionCodeMatch?.[1] && /^\d+$/.test(versionCodeMatch[1].trim())) {
       return `${versionNameMatch[1]}+${versionCodeMatch[1].trim()}`;
     }
     try {
-      const versionPropertiesContent = await fs.readFile(versionPropertiesPath, "utf8");
+      const versionPropertiesContent = await fs.readFile(
+        versionPropertiesPath,
+        "utf8",
+      );
       const versionCodePropertiesMatch = versionPropertiesContent.match(
-        /VERSION_CODE\s*=\s*(\d+)/
+        /VERSION_CODE\s*=\s*(\d+)/,
       );
 
       if (versionCodePropertiesMatch?.[1]) {
