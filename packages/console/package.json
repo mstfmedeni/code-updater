@@ -1,7 +1,7 @@
 {
   "name": "@code-updater/console",
   "type": "module",
-  "version": "0.12.2",
+  "version": "1.0.0",
   "files": [
     "dist",
     "package.json"
@@ -29,7 +29,7 @@
     "@hono/node-server": "^1.13.4",
     "@hono/valibot-validator": "^0.4.1",
     "@hono/vite-dev-server": "^0.18.1",
-    "@code-updater/mock": "0.12.2",
+    "@code-updater/mock": "1.0.0",
     "@kobalte/core": "^0.13.7",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.14.10",
@@ -60,7 +60,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
-    "@code-updater/core": "0.12.2",
-    "@code-updater/plugin-core": "0.12.2"
+    "@code-updater/core": "1.0.0",
+    "@code-updater/plugin-core": "1.0.0"
   }
 }
