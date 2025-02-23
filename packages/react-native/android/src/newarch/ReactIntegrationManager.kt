@@ -1,4 +1,4 @@
-package com.hotupdater
+package com.codeupdater
 
 import android.content.Context
 import android.util.Log
@@ -25,7 +25,7 @@ class ReactIntegrationManager(
             jsBundleLoaderField.isAccessible = true
             jsBundleLoaderField.set(reactHostDelegate, getJSBundlerLoader(bundleURL))
         } catch (e: Exception) {
-            Log.d("HotUpdater", "Failed to setJSBundle: ${e.message}")
+            Log.d("CodeUpdater", "Failed to setJSBundle: ${e.message}")
             throw IllegalAccessException("Could not setJSBundle")
         }
     }
@@ -41,6 +41,6 @@ class ReactIntegrationManager(
         if (reactHost.lifecycleState != LifecycleState.RESUMED && activity != null) {
             reactHost.onHostResume(activity)
         }
-        reactHost.reload("Requested by HotUpdater")
+        reactHost.reload("Requested by CodeUpdater")
     }
 }

@@ -1,3 +1,3 @@
-declare const HotUpdater: {
-  HOT_UPDATER_BUNDLE_ID: string;
+declare const CodeUpdater: {
+  CODE_UPDATER_BUNDLE_ID: string;
 };

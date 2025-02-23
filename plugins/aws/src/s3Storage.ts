@@ -10,7 +10,7 @@ import type {
   BasePluginArgs,
   StoragePlugin,
   StoragePluginHooks,
-} from "@hot-updater/plugin-core";
+} from "@code-updater/plugin-core";
 import fs from "fs/promises";
 import mime from "mime";
 

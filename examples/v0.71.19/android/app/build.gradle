@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.hotupdaterexample"
+    namespace "com.codeupdaterexample"
     defaultConfig {
-        applicationId "com.hotupdaterexample"
+        applicationId "com.codeupdaterexample"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

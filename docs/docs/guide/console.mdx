@@ -3,7 +3,7 @@ import { normalizeImagePath } from 'rspress/runtime';
 
 # Console (Rollback & Force Update)
 
-Opens a localhost server based on plugins configured in `hot-updater.config.ts`.
+Opens a localhost server based on plugins configured in `code-updater.config.ts`.
 For security reasons, only localhost server is supported at the moment.
 
 **The console provides the following features:**
@@ -19,7 +19,7 @@ For security reasons, only localhost server is supported at the moment.
 
 This is a console configuration that does not affect the bundle.
 
-You can configure additional console settings in the `hot-updater.config.ts` file.
+You can configure additional console settings in the `code-updater.config.ts` file.
 
 The `storage` and `database` plugins must be exist.
 
@@ -28,8 +28,8 @@ The `storage` and `database` plugins must be exist.
 | `console.gitUrl` | Enables commit shortcuts by linking to git commit hashes | - |
 | `console.port` | Sets the console server port | `1422` |
 
-```ts title="hot-updater.config.ts"
-import { defineConfig } from "hot-updater";
+```ts title="code-updater.config.ts"
+import { defineConfig } from "code-updater";
 
 export default defineConfig({
   console: { // [!code hl]
@@ -47,9 +47,9 @@ Execute the following command:
 
 <PackageManagerTabs command={
   {
-    npm: "npx hot-updater console",
-    pnpm: "pnpm hot-updater console",
-    yarn: "yarn hot-updater console",
+    npm: "npx code-updater console",
+    pnpm: "pnpm code-updater console",
+    yarn: "yarn code-updater console",
   }
 } />
 
@@ -68,14 +68,14 @@ When you set a bundle's `shouldForceUpdate` status to `true` in the console, use
 
 ## Git URL
 
-You can set the git URL in the `hot-updater.config.ts` file.
+You can set the git URL in the `code-updater.config.ts` file.
 
-```ts title="hot-updater.config.ts"
-import { defineConfig } from "hot-updater";
+```ts title="code-updater.config.ts"
+import { defineConfig } from "code-updater";
 
 export default defineConfig({
   console: {
-    gitUrl: "<your-repo>", // e.g. https://github.com/gronxb/hot-updater // [!code hl]
+    gitUrl: "<your-repo>", // e.g. https://github.com/mstfmedeni/code-updater // [!code hl]
   },
 });
 ```

@@ -1,4 +1,4 @@
--- HotUpdater.bundles
+-- CodeUpdater.bundles
 
 CREATE TABLE bundles (
     id TEXT PRIMARY KEY,

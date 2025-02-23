@@ -3,7 +3,7 @@ import type {
   Bundle,
   DatabasePlugin,
   DatabasePluginHooks,
-} from "@hot-updater/plugin-core";
+} from "@code-updater/plugin-core";
 
 import { Kysely, PostgresDialect } from "kysely";
 import { Pool, type PoolConfig } from "pg";

@@ -5,10 +5,10 @@ import type {
   Bundle,
   DatabasePlugin,
   DatabasePluginHooks,
-} from "@hot-updater/plugin-core";
+} from "@code-updater/plugin-core";
 import Cloudflare from "cloudflare";
 
-import type { SnakeCaseBundle } from "@hot-updater/core";
+import type { SnakeCaseBundle } from "@code-updater/core";
 
 export interface D1DatabaseConfig {
   databaseId: string;

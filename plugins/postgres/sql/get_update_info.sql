@@ -1,4 +1,4 @@
--- HotUpdater.get_update_info
+-- CodeUpdater.get_update_info
 
 CREATE OR REPLACE FUNCTION get_update_info (
     app_platform   platforms,

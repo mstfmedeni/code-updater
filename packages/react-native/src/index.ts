@@ -10,8 +10,8 @@ import { runUpdateProcess } from "./runUpdateProcess";
 import { hotUpdaterStore } from "./store";
 import { wrap } from "./wrap";
 
-export type { HotUpdaterConfig } from "./wrap";
-export type { HotUpdaterEvent } from "./native";
+export type { CodeUpdaterConfig } from "./wrap";
+export type { CodeUpdaterEvent } from "./native";
 
 export * from "./store";
 
@@ -19,7 +19,7 @@ addListener("onProgress", ({ progress }) => {
   hotUpdaterStore.setProgress(progress);
 });
 
-export const HotUpdater = {
+export const CodeUpdater = {
   wrap,
 
   reload,
@@ -39,7 +39,7 @@ export const HotUpdater = {
    * @example
    * ```ts
    * // Auto reload on force update
-   * const result = await HotUpdater.runUpdateProcess({
+   * const result = await CodeUpdater.runUpdateProcess({
    *   source: "<your-update-server-url>",
    *   requestHeaders: {
    *     // Add necessary headers
@@ -48,13 +48,13 @@ export const HotUpdater = {
    * });
    *
    * // Manually handle reload on force update
-   * const result = await HotUpdater.runUpdateProcess({
+   * const result = await CodeUpdater.runUpdateProcess({
    *   source: "<your-update-server-url>",
    *   reloadOnForceUpdate: false
    * });
    *
    * if(result.status !== "UP_TO_DATE" && result.shouldForceUpdate) {
-   *   HotUpdater.reload();
+   *   CodeUpdater.reload();
    * }
    * ```
    *

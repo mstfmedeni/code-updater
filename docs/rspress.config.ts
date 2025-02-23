@@ -13,14 +13,14 @@ export default defineConfig({
     }),
   ],
   root: path.join(__dirname, "docs"),
-  title: "Hot Updater",
+  title: "Code Updater",
   icon: "/logo.png",
-  logoText: "Hot Updater",
+  logoText: "Code Updater",
   logo: {
     light: "/logo.png",
     dark: "/logo.png",
   },
-  base: "/hot-updater/",
+  base: "/code-updater/",
   markdown: {
     defaultWrapCode: true,
   },
@@ -30,7 +30,7 @@ export default defineConfig({
       {
         icon: "github",
         mode: "link",
-        content: "https://github.com/gronxb/hot-updater",
+        content: "https://github.com/mstfmedeni/code-updater",
       },
     ],
   },

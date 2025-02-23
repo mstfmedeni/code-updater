@@ -1,4 +1,4 @@
-import type { SnakeCaseBundle } from "@hot-updater/core";
+import type { SnakeCaseBundle } from "@code-updater/core";
 export type Database = {
   public: {
     Tables: {

@@ -1,28 +1,28 @@
 import type React from "react";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { type CheckForUpdateConfig, checkForUpdate } from "./checkForUpdate";
-import { HotUpdaterError } from "./error";
+import { CodeUpdaterError } from "./error";
 import { useEventCallback } from "./hooks/useEventCallback";
 import { reload, updateBundle } from "./native";
 import type { RunUpdateProcessResponse } from "./runUpdateProcess";
-import { useHotUpdaterStore } from "./store";
+import { useCodeUpdaterStore } from "./store";
 
 type UpdateStatus =
   | "CHECK_FOR_UPDATE"
   | "UPDATING"
   | "UPDATE_PROCESS_COMPLETED";
 
-export interface HotUpdaterConfig extends CheckForUpdateConfig {
+export interface CodeUpdaterConfig extends CheckForUpdateConfig {
   /**
    * Component to show while downloading a new bundle update.
    *
    * When an update exists and the bundle is being downloaded, this component will block access
    * to the entry point and show download progress.
    *
-   * @see {@link https://gronxb.github.io/hot-updater/guide/hot-updater/wrap.html#fallback-component}
+   * @see {@link https://mstfmedeni.github.io/code-updater/guide/code-updater/wrap.html#fallback-component}
    *
    * ```tsx
-   * HotUpdater.wrap({
+   * CodeUpdater.wrap({
    *   source: "<update-server-url>",
    *   fallbackComponent: ({ progress = 0 }) => (
    *     <View style={styles.container}>
@@ -38,7 +38,7 @@ export interface HotUpdaterConfig extends CheckForUpdateConfig {
     status: Exclude<UpdateStatus, "UPDATE_PROCESS_COMPLETED">;
     progress: number;
   }>;
-  onError?: (error: HotUpdaterError) => void;
+  onError?: (error: CodeUpdaterError) => void;
   onProgress?: (progress: number) => void;
   /**
    * When a force update exists, the app will automatically reload.
@@ -50,22 +50,22 @@ export interface HotUpdaterConfig extends CheckForUpdateConfig {
   /**
    * Callback function that is called when the update process is completed.
    *
-   * @see {@link https://gronxb.github.io/hot-updater/guide/hot-updater/wrap.html#onupdateprocesscompleted}
+   * @see {@link https://mstfmedeni.github.io/code-updater/guide/code-updater/wrap.html#onupdateprocesscompleted}
    */
   onUpdateProcessCompleted?: (response: RunUpdateProcessResponse) => void;
 }
 
 export function wrap<P>(
-  config: HotUpdaterConfig,
+  config: CodeUpdaterConfig,
 ): (WrappedComponent: React.ComponentType) => React.ComponentType<P> {
   const { reloadOnForceUpdate = true, ...restConfig } = config;
   return (WrappedComponent) => {
-    const HotUpdaterHOC: React.FC<P> = () => {
-      const { progress } = useHotUpdaterStore();
+    const CodeUpdaterHOC: React.FC<P> = () => {
+      const { progress } = useCodeUpdaterStore();
       const [updateStatus, setUpdateStatus] =
         useState<UpdateStatus>("CHECK_FOR_UPDATE");
 
-      const initHotUpdater = useEventCallback(async () => {
+      const initCodeUpdater = useEventCallback(async () => {
         try {
           setUpdateStatus("CHECK_FOR_UPDATE");
           const updateInfo = await checkForUpdate({
@@ -114,7 +114,7 @@ export function wrap<P>(
           });
           setUpdateStatus("UPDATE_PROCESS_COMPLETED");
         } catch (error) {
-          if (error instanceof HotUpdaterError) {
+          if (error instanceof CodeUpdaterError) {
             restConfig.onError?.(error);
           }
           setUpdateStatus("UPDATE_PROCESS_COMPLETED");
@@ -127,7 +127,7 @@ export function wrap<P>(
       }, [progress]);
 
       useLayoutEffect(() => {
-        initHotUpdater();
+        initCodeUpdater();
       }, []);
 
       if (
@@ -141,6 +141,6 @@ export function wrap<P>(
       return <WrappedComponent />;
     };
 
-    return HotUpdaterHOC;
+    return CodeUpdaterHOC;
   };
 }

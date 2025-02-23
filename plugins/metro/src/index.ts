@@ -4,7 +4,7 @@ import {
   type BuildPlugin,
   type BuildPluginConfig,
   log,
-} from "@hot-updater/plugin-core";
+} from "@code-updater/plugin-core";
 import { ExecaError, execa } from "execa";
 import fs from "fs/promises";
 import { compileHermes } from "./hermes";
@@ -71,10 +71,10 @@ const runBundle = async ({
     .catch(() => null);
 
   if (!bundleId) {
-    throw new Error(`Please check if 'hot-updater/babel-plugin' is configured in babel.config.js
+    throw new Error(`Please check if 'code-updater/babel-plugin' is configured in babel.config.js
 Example:
 {
-  plugins: ['hot-updater/babel-plugin']
+  plugins: ['code-updater/babel-plugin']
 }`);
   }
 

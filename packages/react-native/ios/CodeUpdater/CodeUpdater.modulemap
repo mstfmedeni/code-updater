@@ -1,0 +1,6 @@
+framework module CodeUpdater {
+  umbrella header "CodeUpdater.h"
+  
+  export *
+  module * { export * }
+} 

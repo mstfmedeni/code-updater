@@ -2,7 +2,7 @@
 pageType: home
 
 hero:
-  name: Hot Updater
+  name: Code Updater
   text: React Native OTA
   tagline: Alternative to CodePush
   actions:
@@ -11,7 +11,7 @@ hero:
       link: /guide/getting-started/quick-start-with-supabase
     - theme: alt
       text: GitHub
-      link: https://github.com/gronxb/hot-updater
+      link: https://github.com/mstfmedeni/code-updater
   image:
     src: /logo.png
     alt: Logo

@@ -1,9 +1,9 @@
 import { GetObjectCommand, type S3Client } from "@aws-sdk/client-s3";
-import type { Bundle, Platform } from "@hot-updater/core";
+import type { Bundle, Platform } from "@code-updater/core";
 import {
   filterCompatibleAppVersions,
   getUpdateInfo as getUpdateInfoJS,
-} from "@hot-updater/js";
+} from "@code-updater/js";
 
 const getS3Json = async (s3: S3Client, bucket: string, key: string) => {
   try {

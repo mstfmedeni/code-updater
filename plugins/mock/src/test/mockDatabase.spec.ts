@@ -1,4 +1,4 @@
-import type { Bundle } from "@hot-updater/core";
+import type { Bundle } from "@code-updater/core";
 import { describe, expect, it } from "vitest";
 import { mockDatabase } from "../mockDatabase";
 

@@ -1,4 +1,4 @@
-import { setupGetUpdateInfoTestSuite } from "@hot-updater/core/test-utils";
+import { setupGetUpdateInfoTestSuite } from "@code-updater/core/test-utils";
 import { describe } from "vitest";
 import { getUpdateInfo } from "./getUpdateInfo";
 

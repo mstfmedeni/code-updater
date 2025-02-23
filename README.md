@@ -1,16 +1,20 @@
-  # Hot Updater
+  # Code Updater
   
-[![NPM](https://img.shields.io/npm/v/hot-updater)](https://www.npmjs.com/package/hot-updater)
+[![NPM](https://img.shields.io/npm/v/code-updater)](https://www.npmjs.com/package/code-updater)
 
   A self-hostable OTA update solution for React Native **(Alternative to CodePush)**
 
-  ![hot-updater](https://raw.githubusercontent.com/gronxb/hot-updater/main/demo.gif)
+  ![code-updater](https://raw.githubusercontent.com/mstfmedeni/code-updater/main/demo.gif)
+
+
+This package was forked from gronxb's original work, and we extend our sincere gratitude for their contribution. We've enhanced the package by adding build number support and successfully deployed these improvements.
+https://github.com/gronxb/hot-updater
 
 
   ## Documentation
 
   Full documentation is available at:
-  https://gronxb.github.io/hot-updater
+  https://mstfmedeni.github.io/code-updater
 
   ## Key Features
 
@@ -24,7 +28,7 @@
 
   ## Plugin System
 
-  Hot Updater provides high extensibility through its plugin system. Each functionality like build, storage, and database is separated into plugins, allowing users to configure them according to their needs.
+  Code Updater provides high extensibility through its plugin system. Each functionality like build, storage, and database is separated into plugins, allowing users to configure them according to their needs.
 
   ### Plugin Types
 
@@ -34,62 +38,62 @@
 
   ### Configuration Example
 
-  * [Supabase](https://gronxb.github.io/hot-updater/guide/providers/1_supabase.html)
+  * [Supabase](https://mstfmedeni.github.io/code-updater/guide/providers/1_supabase.html)
   ```tsx
-  import { metro } from "@hot-updater/metro";
-  import { supabaseDatabase, supabaseStorage } from "@hot-updater/supabase";
-  import { defineConfig } from "hot-updater";
+  import { metro } from "@code-updater/metro";
+  import { supabaseDatabase, supabaseStorage } from "@code-updater/supabase";
+  import { defineConfig } from "code-updater";
   import "dotenv/config";
 
   export default defineConfig({
     build: metro({ enableHermes: true }),
     storage: supabaseStorage({
-      supabaseUrl: process.env.HOT_UPDATER_SUPABASE_URL!,
-      supabaseAnonKey: process.env.HOT_UPDATER_SUPABASE_ANON_KEY!,
-      bucketName: process.env.HOT_UPDATER_SUPABASE_BUCKET_NAME!,
+      supabaseUrl: process.env.CODE_UPDATER_SUPABASE_URL!,
+      supabaseAnonKey: process.env.CODE_UPDATER_SUPABASE_ANON_KEY!,
+      bucketName: process.env.CODE_UPDATER_SUPABASE_BUCKET_NAME!,
     }),
     database: supabaseDatabase({
-      supabaseUrl: process.env.HOT_UPDATER_SUPABASE_URL!,
-      supabaseAnonKey: process.env.HOT_UPDATER_SUPABASE_ANON_KEY!,
+      supabaseUrl: process.env.CODE_UPDATER_SUPABASE_URL!,
+      supabaseAnonKey: process.env.CODE_UPDATER_SUPABASE_ANON_KEY!,
     }),
   });
   ```
 
-* [Cloudflare](https://gronxb.github.io/hot-updater/guide/providers/2_cloudflare.html)
+* [Cloudflare](https://mstfmedeni.github.io/code-updater/guide/providers/2_cloudflare.html)
 ```tsx
-import { metro } from "@hot-updater/metro";
-import { d1Database, r2Storage } from "@hot-updater/cloudflare";
-import { defineConfig } from "hot-updater";
+import { metro } from "@code-updater/metro";
+import { d1Database, r2Storage } from "@code-updater/cloudflare";
+import { defineConfig } from "code-updater";
 import "dotenv/config";
 
 export default defineConfig({
   build: metro({ enableHermes: true }),
   storage: r2Storage({
-    bucketName: process.env.HOT_UPDATER_CLOUDFLARE_R2_BUCKET_NAME!,
-    accountId: process.env.HOT_UPDATER_CLOUDFLARE_ACCOUNT_ID!,
-    cloudflareApiToken: process.env.HOT_UPDATER_CLOUDFLARE_API_TOKEN!,
+    bucketName: process.env.CODE_UPDATER_CLOUDFLARE_R2_BUCKET_NAME!,
+    accountId: process.env.CODE_UPDATER_CLOUDFLARE_ACCOUNT_ID!,
+    cloudflareApiToken: process.env.CODE_UPDATER_CLOUDFLARE_API_TOKEN!,
   }),
   database: d1Database({
-    databaseId: process.env.HOT_UPDATER_CLOUDFLARE_D1_DATABASE_ID!,
-    accountId: process.env.HOT_UPDATER_CLOUDFLARE_ACCOUNT_ID!,
-    cloudflareApiToken: process.env.HOT_UPDATER_CLOUDFLARE_API_TOKEN!,
+    databaseId: process.env.CODE_UPDATER_CLOUDFLARE_D1_DATABASE_ID!,
+    accountId: process.env.CODE_UPDATER_CLOUDFLARE_ACCOUNT_ID!,
+    cloudflareApiToken: process.env.CODE_UPDATER_CLOUDFLARE_API_TOKEN!,
   }),
 });
 ```
 
-* [AWS S3 + Lambda@Edge](https://gronxb.github.io/hot-updater/guide/providers/3_aws-s3-lambda-edge.html)
+* [AWS S3 + Lambda@Edge](https://mstfmedeni.github.io/code-updater/guide/providers/3_aws-s3-lambda-edge.html)
 ```tsx
-import { metro } from "@hot-updater/metro";
-import { s3Storage, s3Database } from "@hot-updater/aws";
-import { defineConfig } from "hot-updater";
+import { metro } from "@code-updater/metro";
+import { s3Storage, s3Database } from "@code-updater/aws";
+import { defineConfig } from "code-updater";
 import "dotenv/config";
 
 const options = {
-  bucketName: process.env.HOT_UPDATER_S3_BUCKET_NAME!,
-  region: process.env.HOT_UPDATER_S3_REGION!,
+  bucketName: process.env.CODE_UPDATER_S3_BUCKET_NAME!,
+  region: process.env.CODE_UPDATER_S3_REGION!,
   credentials: {
-    accessKeyId: process.env.HOT_UPDATER_S3_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.HOT_UPDATER_S3_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.CODE_UPDATER_S3_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.CODE_UPDATER_S3_SECRET_ACCESS_KEY!,
   },
 };
 

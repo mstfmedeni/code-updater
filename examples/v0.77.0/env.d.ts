@@ -1,3 +1,3 @@
 declare module "@env" {
-  export const HOT_UPDATER_SUPABASE_URL: string;
+  export const CODE_UPDATER_SUPABASE_URL: string;
 }

@@ -12,8 +12,8 @@
   "simulator-test",
   {
     "type": "dir",
-    "name": "hot-updater",
-    "label": "HotUpdater API",
+    "name": "code-updater",
+    "label": "CodeUpdater API",
     "collapsible": true,
     "collapsed": false
   },

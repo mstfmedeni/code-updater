@@ -1,6 +1,6 @@
-export class HotUpdaterError extends Error {
+export class CodeUpdaterError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "HotUpdaterError";
+    this.name = "CodeUpdaterError";
   }
 }

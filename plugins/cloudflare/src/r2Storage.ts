@@ -7,7 +7,7 @@ import type {
   BasePluginArgs,
   StoragePlugin,
   StoragePluginHooks,
-} from "@hot-updater/plugin-core";
+} from "@code-updater/plugin-core";
 
 import Cloudflare from "cloudflare";
 import { ExecaError } from "execa";

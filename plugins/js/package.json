@@ -1,5 +1,5 @@
 {
-  "name": "@hot-updater/js",
+  "name": "@code-updater/js",
   "version": "0.12.2",
   "type": "module",
   "description": "React Native OTA solution for self-hosted",
@@ -32,17 +32,17 @@
     "build": "rslib build",
     "test:type": "tsc --noEmit"
   },
-  "repository": "https://github.com/gronxb/hot-updater",
-  "author": "gronxb <gron1gh1@gmail.com> (https://github.com/gronxb)",
+  "repository": "https://github.com/mstfmedeni/code-updater",
+  "author": "mstfmedeni <mustafa@medeni.dev> (https://github.com/mstfmedeni)",
   "bugs": {
-    "url": "https://github.com/gronxb/hot-updater/issues"
+    "url": "https://github.com/mstfmedeni/code-updater/issues"
   },
-  "homepage": "https://github.com/gronxb/hot-updater#readme",
+  "homepage": "https://github.com/mstfmedeni/code-updater#readme",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@hot-updater/core": "0.12.2"
+    "@code-updater/core": "0.12.2"
   },
   "devDependencies": {
     "semver": "^7.6.3",

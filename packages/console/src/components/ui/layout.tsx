@@ -5,14 +5,14 @@ export default function Layout({ children }: { children: JSX.Element }) {
   return (
     <main class="w-full space-y-2.5">
       <div class="flex flex-row items-center gap-1">
-        <img src={logo} alt="Hot Updater Console" class="w-12 h-12" />
+        <img src={logo} alt="Code Updater Console" class="w-12 h-12" />
         <a
-          href="https://github.com/gronxb/hot-updater"
+          href="https://github.com/mstfmedeni/code-updater"
           target="_blank"
           class="text-2xl font-light"
           rel="noreferrer"
         >
-          Hot Updater Console
+          Code Updater Console
         </a>
       </div>
       {children}

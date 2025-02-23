@@ -1,8 +1,8 @@
-import type { Bundle, BundleArg, UpdateInfo } from "@hot-updater/core";
-import { getUpdateInfo } from "@hot-updater/js";
+import type { Bundle, BundleArg, UpdateInfo } from "@code-updater/core";
+import { getUpdateInfo } from "@code-updater/js";
 import { Platform } from "react-native";
 import { ensureUpdateInfo } from "./ensureUpdateInfo";
-import { HotUpdaterError } from "./error";
+import { CodeUpdaterError } from "./error";
 import { getAppVersion, getBundleId } from "./native";
 
 export interface CheckForUpdateConfig {
@@ -16,8 +16,8 @@ export async function checkForUpdate(config: CheckForUpdateConfig) {
   }
 
   if (!["ios", "android"].includes(Platform.OS)) {
-    throw new HotUpdaterError(
-      "HotUpdater is only supported on iOS and Android",
+    throw new CodeUpdaterError(
+      "CodeUpdater is only supported on iOS and Android",
     );
   }
 
@@ -26,7 +26,7 @@ export async function checkForUpdate(config: CheckForUpdateConfig) {
   const currentBundleId = await getBundleId();
 
   if (!currentAppVersion) {
-    throw new HotUpdaterError("Failed to get app version");
+    throw new CodeUpdaterError("Failed to get app version");
   }
 
   const ensuredUpdateInfo = await ensureUpdateInfo(

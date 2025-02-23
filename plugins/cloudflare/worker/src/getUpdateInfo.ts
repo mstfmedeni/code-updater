@@ -1,6 +1,6 @@
-import { filterCompatibleAppVersions } from "@hot-updater/js";
+import { filterCompatibleAppVersions } from "@code-updater/js";
 
-import type { Platform, UpdateInfo, UpdateStatus } from "@hot-updater/core";
+import type { Platform, UpdateInfo, UpdateStatus } from "@code-updater/core";
 
 export const getUpdateInfo = async (
   DB: D1Database,

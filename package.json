@@ -1,12 +1,12 @@
 {
-  "name": "@hot-updater/root",
+  "name": "@code-updater/root",
   "private": true,
   "description": "React Native OTA solution for self-hosted",
   "keywords": [],
   "license": "MIT",
   "scripts": {
     "biome": "biome format packages/** plugins/** --write",
-    "biome:check": "biome check packages/** plugins/**",
+    "biome:check": "biome check packages/** plugins/** --write",
     "clear": "rimraf --glob **/dist **/node_modules .nx",
     "test": "vitest",
     "build": "nx run-many --target=build --projects=packages/*,plugins/*",
@@ -29,18 +29,18 @@
   },
   "pnpm": {
     "overrides": {
-      "hot-updater": "workspace:*",
-      "@hot-updater/console": "workspace:*",
-      "@hot-updater/plugin-core": "workspace:*",
-      "@hot-updater/core": "workspace:*",
-      "@hot-updater/aws": "workspace:*",
-      "@hot-updater/metro": "workspace:*",
-      "@hot-updater/react-native": "workspace:*",
-      "@hot-updater/postgres": "workspace:*",
-      "@hot-updater/supabase": "workspace:*",
-      "@hot-updater/cloudflare": "workspace:*",
-      "@hot-updater/js": "workspace:*",
-      "@hot-updater/mock": "workspace:*"
+      "code-updater": "workspace:*",
+      "@code-updater/console": "workspace:*",
+      "@code-updater/plugin-core": "workspace:*",
+      "@code-updater/core": "workspace:*",
+      "@code-updater/aws": "workspace:*",
+      "@code-updater/metro": "workspace:*",
+      "@code-updater/react-native": "workspace:*",
+      "@code-updater/postgres": "workspace:*",
+      "@code-updater/supabase": "workspace:*",
+      "@code-updater/cloudflare": "workspace:*",
+      "@code-updater/js": "workspace:*",
+      "@code-updater/mock": "workspace:*"
     }
   },
   "packageManager": "pnpm@9.15.4"

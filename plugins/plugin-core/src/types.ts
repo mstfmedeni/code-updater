@@ -1,6 +1,6 @@
-import type { Bundle, Platform } from "@hot-updater/core";
+import type { Bundle, Platform } from "@code-updater/core";
 
-export type { Platform, Bundle } from "@hot-updater/core";
+export type { Platform, Bundle } from "@code-updater/core";
 
 export interface BasePluginArgs {
   cwd: string;

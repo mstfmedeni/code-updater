@@ -1,6 +1,6 @@
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import type { Bundle, GetBundlesArgs, UpdateInfo } from "@hot-updater/core";
-import { setupGetUpdateInfoTestSuite } from "@hot-updater/core/test-utils";
+import type { Bundle, GetBundlesArgs, UpdateInfo } from "@code-updater/core";
+import { setupGetUpdateInfoTestSuite } from "@code-updater/core/test-utils";
 import { mockClient } from "aws-sdk-client-mock";
 import { groupBy } from "es-toolkit";
 import { beforeEach, describe } from "vitest";

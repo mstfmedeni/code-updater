@@ -1,5 +1,5 @@
+import { setupSemverSatisfiesTestSuite } from "@code-updater/core/test-utils";
 import { PGlite } from "@electric-sql/pglite";
-import { setupSemverSatisfiesTestSuite } from "@hot-updater/core/test-utils";
 import { afterAll, describe } from "vitest";
 import { prepareSql } from "./prepareSql";
 

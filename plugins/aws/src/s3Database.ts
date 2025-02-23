@@ -12,7 +12,7 @@ import type {
   Bundle,
   DatabasePlugin,
   DatabasePluginHooks,
-} from "@hot-updater/plugin-core";
+} from "@code-updater/plugin-core";
 import mime from "mime";
 import { streamToString } from "./utils/streamToString";
 

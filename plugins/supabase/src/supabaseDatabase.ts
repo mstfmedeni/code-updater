@@ -3,7 +3,7 @@ import type {
   Bundle,
   DatabasePlugin,
   DatabasePluginHooks,
-} from "@hot-updater/plugin-core";
+} from "@code-updater/plugin-core";
 
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./types";

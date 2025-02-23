@@ -4,7 +4,7 @@ import { normalizeImagePath } from 'rspress/runtime';
 
 # Cloudflare Provider
 
-This guide walks you through setting up `hot-updater` with Cloudflare in a React Native project. You'll configure the environment, install required packages, and initialize Cloudflare for seamless updates.
+This guide walks you through setting up `code-updater` with Cloudflare in a React Native project. You'll configure the environment, install required packages, and initialize Cloudflare for seamless updates.
 
 <video src={normalizeImagePath("/guide/getting-started/init-cloudflare.mp4")} controls autoPlay loop muted />
 
@@ -21,9 +21,9 @@ Run the following command to install dependencies:
 
 <PackageManagerTabs command={
   {
-    npm: "npm install hot-updater --save-dev",
-    pnpm: "pnpm add hot-updater -D",
-    yarn: "yarn add hot-updater -D",
+    npm: "npm install code-updater --save-dev",
+    pnpm: "pnpm add code-updater -D",
+    yarn: "yarn add code-updater -D",
   }
 } />
 
@@ -33,9 +33,9 @@ Run the initialization script to start the interactive setup process. Use the fo
 
 <PackageManagerTabs command={
   {
-    npm: "npx hot-updater init",
-    pnpm: "pnpm hot-updater init",
-    yarn: "yarn hot-updater init",
+    npm: "npx code-updater init",
+    pnpm: "pnpm code-updater init",
+    yarn: "yarn code-updater init",
   }
 } />
 
@@ -57,10 +57,10 @@ During the setup, you will be prompted to:
 Once the setup is complete, a `.env` file will be generated containing the following keys:
 
 ```
-HOT_UPDATER_CLOUDFLARE_ACCOUNT_ID=your-account-id
-HOT_UPDATER_CLOUDFLARE_R2_BUCKET_NAME=your-r2-bucket-name
-HOT_UPDATER_CLOUDFLARE_D1_DATABASE_ID=your-d1-database-id
-HOT_UPDATER_CLOUDFLARE_API_TOKEN=your-api-token
+CODE_UPDATER_CLOUDFLARE_ACCOUNT_ID=your-account-id
+CODE_UPDATER_CLOUDFLARE_R2_BUCKET_NAME=your-r2-bucket-name
+CODE_UPDATER_CLOUDFLARE_D1_DATABASE_ID=your-d1-database-id
+CODE_UPDATER_CLOUDFLARE_API_TOKEN=your-api-token
 ```
 
 
@@ -77,36 +77,36 @@ please refer to the article below for more details:
 ## Step 3: Generated Configurations
 During the initialization process, the following file is automatically generated:
 
-- `hot-updater.config.ts`: This file contains the configuration settings for integrating Cloudflare with your project.
+- `code-updater.config.ts`: This file contains the configuration settings for integrating Cloudflare with your project.
 
-```ts title=hot-updater.config.ts
-import { metro } from "@hot-updater/metro";
-import { d1Database, r2Storage } from "@hot-updater/cloudflare";
-import { defineConfig } from "hot-updater";
+```ts title=code-updater.config.ts
+import { metro } from "@code-updater/metro";
+import { d1Database, r2Storage } from "@code-updater/cloudflare";
+import { defineConfig } from "code-updater";
 import "dotenv/config";
 
 export default defineConfig({
   build: metro({ enableHermes: true }),
   storage: r2Storage({
-    bucketName: process.env.HOT_UPDATER_CLOUDFLARE_R2_BUCKET_NAME!,
-    accountId: process.env.HOT_UPDATER_CLOUDFLARE_ACCOUNT_ID!,
-    cloudflareApiToken: process.env.HOT_UPDATER_CLOUDFLARE_API_TOKEN!,
+    bucketName: process.env.CODE_UPDATER_CLOUDFLARE_R2_BUCKET_NAME!,
+    accountId: process.env.CODE_UPDATER_CLOUDFLARE_ACCOUNT_ID!,
+    cloudflareApiToken: process.env.CODE_UPDATER_CLOUDFLARE_API_TOKEN!,
   }),
   database: d1Database({
-    databaseId: process.env.HOT_UPDATER_CLOUDFLARE_D1_DATABASE_ID!,
-    accountId: process.env.HOT_UPDATER_CLOUDFLARE_ACCOUNT_ID!,
-    cloudflareApiToken: process.env.HOT_UPDATER_CLOUDFLARE_API_TOKEN!,
+    databaseId: process.env.CODE_UPDATER_CLOUDFLARE_D1_DATABASE_ID!,
+    accountId: process.env.CODE_UPDATER_CLOUDFLARE_ACCOUNT_ID!,
+    cloudflareApiToken: process.env.CODE_UPDATER_CLOUDFLARE_API_TOKEN!,
   }),
 });
 
 ```
 
-## Step 4: Add HotUpdater to Your Project
+## Step 4: Add CodeUpdater to Your Project
 
-The HotUpdater component wraps your application, enabling seamless delivery of updates and fallback UI during updates. Follow these steps to integrate it into your App.tsx:
+The CodeUpdater component wraps your application, enabling seamless delivery of updates and fallback UI during updates. Follow these steps to integrate it into your App.tsx:
 
 ```tsx title=App.tsx
-import { HotUpdater } from "@hot-updater/react-native";
+import { CodeUpdater } from "@code-updater/react-native";
 
 function App() {
   return (
@@ -116,7 +116,7 @@ function App() {
   );
 }
 
-export default HotUpdater.wrap({ 
+export default CodeUpdater.wrap({ 
   source: "https://<your-worker-name>.<your-subdomain>.workers.dev/api/check-update", // [!code ++]
   requestHeaders: {
     // if you want to use the request headers, you can add them here
@@ -150,7 +150,7 @@ export default HotUpdater.wrap({
 
 ## Step 5: Add Babel Plugin to Your Project
 
-In this step, you will configure Babel to set the bundle ID at build time. This is necessary for integrating the `hot-updater` plugin into your project.
+In this step, you will configure Babel to set the bundle ID at build time. This is necessary for integrating the `code-updater` plugin into your project.
 
 Add the following to your `babel.config.js` file:
 
@@ -158,21 +158,21 @@ Add the following to your `babel.config.js` file:
 module.exports = {
   presets: ['module:@react-native/babel-preset'],
   plugins: [
-    'hot-updater/babel-plugin', // [!code ++]
+    'code-updater/babel-plugin', // [!code ++]
   ],
 };
 ```
 
 ## Step 6: Add Native Code
 
-To complete the integration of `hot-updater`, you'll need to add native code modifications for both Android and iOS platforms. This step ensures the `hot-updater` can interact with your app's underlying framework to apply updates seamlessly.
+To complete the integration of `code-updater`, you'll need to add native code modifications for both Android and iOS platforms. This step ensures the `code-updater` can interact with your app's underlying framework to apply updates seamlessly.
 
 ### Android
 
 <Tabs>
     <Tab label="Kotlin">
 ```kt title=android/app/src/main/java/com/<your-app-name>/MainApplication.kt
-package com.hotupdaterexample
+package com.codeupdaterexample
 
 import android.app.Application
 import com.facebook.react.PackageList
@@ -185,7 +185,7 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.soloader.OpenSourceMergedSoMapping
 import com.facebook.soloader.SoLoader
-import com.hotupdater.HotUpdater // [!code ++]
+import com.codeupdater.CodeUpdater // [!code ++]
 
 class MainApplication : Application(), ReactApplication {
 
@@ -205,7 +205,7 @@ class MainApplication : Application(), ReactApplication {
         override val isHermesEnabled: Boolean = BuildConfig.IS_HERMES_ENABLED
 
         override fun getJSBundleFile(): String? {  // [!code ++]
-          return HotUpdater.getJSBundleFile(applicationContext)  // [!code ++]
+          return CodeUpdater.getJSBundleFile(applicationContext)  // [!code ++]
         }  // [!code ++]
       }
 
@@ -250,7 +250,7 @@ class MainApplication : Application(), ReactApplication {
   ```
   ```java title=android/app/src/main/java/com/<your-app-name>/MainApplication.java
 
-package com.hotupdaterexample;
+package com.codeupdaterexample;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
@@ -261,7 +261,7 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
-import com.hotupdater.HotUpdater;  // [!code ++]
+import com.codeupdater.CodeUpdater;  // [!code ++]
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -287,7 +287,7 @@ public class MainApplication extends Application implements ReactApplication {
         
         @Override // [!code ++]
         protected String getJSBundleFile() {  // [!code ++]
-            return HotUpdater.Companion.getJSBundleFile(this.getApplication().getApplicationContext());  // [!code ++]
+            return CodeUpdater.Companion.getJSBundleFile(this.getApplication().getApplicationContext());  // [!code ++]
         }  // [!code ++]
 
         @Override
@@ -329,14 +329,14 @@ public class MainApplication extends Application implements ReactApplication {
     <Tab label="Objective-C">
 ```objc title=ios/<your-app-name>/AppDelegate.mm
 #import "AppDelegate.h"
-#import <HotUpdater/HotUpdater.h> // [!code ++]
+#import <CodeUpdater/CodeUpdater.h> // [!code ++]
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.moduleName = @"HotUpdaterExample";
+  self.moduleName = @"CodeUpdaterExample";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
@@ -356,7 +356,7 @@ public class MainApplication extends Application implements ReactApplication {
 #else // [!code --]
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"]; // [!code --]
 #endif // [!code --]
-  return [HotUpdater bundleURL]; // [!code ++]
+  return [CodeUpdater bundleURL]; // [!code ++]
 }
 
 @end
@@ -368,12 +368,12 @@ import UIKit
 import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
-import HotUpdater // [!code ++]
+import CodeUpdater // [!code ++]
 
 @main
 class AppDelegate: RCTAppDelegate {
   override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    self.moduleName = "HotUpdaterExample"
+    self.moduleName = "CodeUpdaterExample"
     self.dependencyProvider = RCTAppDependencyProvider()
 
     // You can add your custom initial props in the dictionary below.
@@ -393,7 +393,7 @@ class AppDelegate: RCTAppDelegate {
 #else // [!code --]
     Bundle.main.url(forResource: "main", withExtension: "jsbundle") // [!code --]
 #endif // [!code --]
-    HotUpdater.bundleURL() // [!code ++]
+    CodeUpdater.bundleURL() // [!code ++]
   }
 }
 
@@ -404,9 +404,9 @@ class AppDelegate: RCTAppDelegate {
 
 ## Verifying the Setup
 1. Check your Cloudflare dashboard for the newly created bucket, D1 database, and worker.
-2. Test the HotUpdater integration in your React Native app.
+2. Test the CodeUpdater integration in your React Native app.
 
 
-You're all set! 🎉 Start using hot-updater with Cloudflare for seamless updates in your React Native app.
+You're all set! 🎉 Start using code-updater with Cloudflare for seamless updates in your React Native app.
 
 This document simplifies the initialization process, making it easy for developers to get started with minimal friction.

@@ -93,4 +93,4 @@ generated/
 
 .wrangler/
 
-.hot-updater/
+.code-updater/

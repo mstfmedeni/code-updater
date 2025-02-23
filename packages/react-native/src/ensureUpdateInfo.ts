@@ -3,7 +3,7 @@ import type {
   BundleArg,
   GetBundlesArgs,
   UpdateInfo,
-} from "@hot-updater/core";
+} from "@code-updater/core";
 
 export const ensureUpdateInfo = async (
   source: BundleArg,

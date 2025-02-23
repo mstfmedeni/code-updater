@@ -1,12 +1,12 @@
 import { useSyncExternalStore } from "react";
 
-export type HotUpdaterState = {
+export type CodeUpdaterState = {
   progress: number;
   isBundleUpdated: boolean;
 };
 
-const createHotUpdaterStore = () => {
-  let state: HotUpdaterState = {
+const createCodeUpdaterStore = () => {
+  let state: CodeUpdaterState = {
     progress: 0,
     isBundleUpdated: false,
   };
@@ -39,9 +39,9 @@ const createHotUpdaterStore = () => {
   return { getSnapshot, setProgress, subscribe };
 };
 
-export const hotUpdaterStore = createHotUpdaterStore();
+export const hotUpdaterStore = createCodeUpdaterStore();
 
-export const useHotUpdaterStore = () => {
+export const useCodeUpdaterStore = () => {
   return useSyncExternalStore(
     hotUpdaterStore.subscribe,
     hotUpdaterStore.getSnapshot,

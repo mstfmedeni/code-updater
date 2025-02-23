@@ -1,5 +1,5 @@
 -- Migration number: 0001 	 2025-01-27T08:37:50.374Z
--- HotUpdater.bundles
+-- CodeUpdater.bundles
 
 CREATE TABLE bundles (
     id TEXT PRIMARY KEY,

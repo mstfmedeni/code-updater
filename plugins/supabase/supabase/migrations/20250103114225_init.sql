@@ -1,4 +1,4 @@
--- HotUpdater.bundles
+-- CodeUpdater.bundles
 
 CREATE TYPE platforms AS ENUM ('ios', 'android');
 
@@ -17,7 +17,7 @@ CREATE TABLE bundles (
 CREATE INDEX bundles_target_app_version_idx ON bundles(target_app_version);
 
 
--- HotUpdater.get_update_info
+-- CodeUpdater.get_update_info
 
 CREATE OR REPLACE FUNCTION get_update_info (
     app_platform   platforms,
@@ -99,7 +99,7 @@ BEGIN
 END;
 $$;
 
--- HotUpdater.semver_satisfies
+-- CodeUpdater.semver_satisfies
 
 CREATE OR REPLACE FUNCTION semver_satisfies(range_expression TEXT, version TEXT)
 RETURNS BOOLEAN AS $$

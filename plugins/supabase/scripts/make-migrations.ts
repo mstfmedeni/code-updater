@@ -4,24 +4,24 @@ import fs from "fs/promises";
 import pc from "picocolors";
 
 /**
- * Find markers in the format '-- HotUpdater.xxxx' from content and
+ * Find markers in the format '-- CodeUpdater.xxxx' from content and
  * extract SQL statements from each marker to the next marker into a Map
  * @param {string} content - SQL file content
- * @returns {Map<string, string>} - key is HotUpdater marker, value is the block
+ * @returns {Map<string, string>} - key is CodeUpdater marker, value is the block
  */
-function parseHotUpdaterContents(content: string) {
-  const markerRegex = /--\s*HotUpdater\.[^\n]*/g;
+function parseCodeUpdaterContents(content: string) {
+  const markerRegex = /--\s*CodeUpdater\.[^\n]*/g;
   const resultMap = new Map();
 
-  // Extract HotUpdater markers
+  // Extract CodeUpdater markers
   const markers = content.match(markerRegex);
   if (!markers) return resultMap;
 
   // Find blocks for each marker and store in Map
   for (const marker of markers) {
     const key = marker.trim();
-    // Regex: Extract statement from marker(key) to next HotUpdater marker
-    const blockRegex = new RegExp(`${key}[\\s\\S]*?(?=--\\s*HotUpdater\\.|$)`);
+    // Regex: Extract statement from marker(key) to next CodeUpdater marker
+    const blockRegex = new RegExp(`${key}[\\s\\S]*?(?=--\\s*CodeUpdater\\.|$)`);
     const matchBlock = content.match(blockRegex);
     if (matchBlock) {
       resultMap.set(key, matchBlock[0].trim());
@@ -32,12 +32,12 @@ function parseHotUpdaterContents(content: string) {
 }
 
 /**
- * Read all .sql files from a directory, extract HotUpdater blocks
+ * Read all .sql files from a directory, extract CodeUpdater blocks
  * and combine them into a single Map
  * @param {string} dirPath - Migration directory path
- * @returns {Promise<Map<string, string>>} - key: HotUpdater marker, value: block
+ * @returns {Promise<Map<string, string>>} - key: CodeUpdater marker, value: block
  */
-async function readHotUpdaterBlocksFromDir(dirPath: string) {
+async function readCodeUpdaterBlocksFromDir(dirPath: string) {
   const files = (await fs.readdir(dirPath)).sort((a, b) => a.localeCompare(b));
   const migrationMap = new Map();
 
@@ -46,8 +46,8 @@ async function readHotUpdaterBlocksFromDir(dirPath: string) {
 
     const filePath = path.join(dirPath, file);
     const content = await fs.readFile(filePath, "utf-8");
-    // Extract HotUpdater blocks from file content
-    const parsedBlocks = parseHotUpdaterContents(content);
+    // Extract CodeUpdater blocks from file content
+    const parsedBlocks = parseCodeUpdaterContents(content);
 
     // Store all extracted blocks in Map
     for (const [key, block] of parsedBlocks.entries()) {
@@ -59,21 +59,21 @@ async function readHotUpdaterBlocksFromDir(dirPath: string) {
 }
 
 /**
- * Extract HotUpdater blocks from new SQL files (@hot-updater/postgres/sql) into a Map
- * @param {string} dirPath - @hot-updater/postgres/sql directory path
+ * Extract CodeUpdater blocks from new SQL files (@code-updater/postgres/sql) into a Map
+ * @param {string} dirPath - @code-updater/postgres/sql directory path
  * @returns {Promise<Map<string, string>>}
  */
 async function readNewMigrations(dirPath: string) {
   const files = await fs.readdir(dirPath);
   const newMigrationMap = new Map();
 
-  // Select .sql files and extract HotUpdater blocks
+  // Select .sql files and extract CodeUpdater blocks
   for (const file of files) {
     if (!file.endsWith(".sql")) continue;
 
     const filePath = path.join(dirPath, file);
     const content = await fs.readFile(filePath, "utf-8");
-    const parsedBlocks = parseHotUpdaterContents(content);
+    const parsedBlocks = parseCodeUpdaterContents(content);
 
     for (const [key, block] of parsedBlocks.entries()) {
       newMigrationMap.set(key, block);
@@ -87,23 +87,23 @@ async function readNewMigrations(dirPath: string) {
  * Main function responsible for actual migration file creation
  */
 async function main() {
-  // @hot-updater/postgres/sql path
+  // @code-updater/postgres/sql path
   const postgresPath = import.meta
-    .resolve("@hot-updater/postgres/sql")
+    .resolve("@code-updater/postgres/sql")
     .replace("file://", "");
 
   // Create migrations directory (skip if exists)
   const migrationsDir = path.join(process.cwd(), "supabase/migrations");
   await fs.mkdir(migrationsDir, { recursive: true });
 
-  // Extract all HotUpdater blocks from existing migration .sql files
-  const existingMigrations = await readHotUpdaterBlocksFromDir(migrationsDir);
+  // Extract all CodeUpdater blocks from existing migration .sql files
+  const existingMigrations = await readCodeUpdaterBlocksFromDir(migrationsDir);
   console.log(
     pc.blue("Existing migration contents:"),
     Array.from(existingMigrations.keys()),
   );
 
-  // Extract all HotUpdater blocks from new SQL files
+  // Extract all CodeUpdater blocks from new SQL files
   const newMigrations = await readNewMigrations(postgresPath);
   console.log(
     pc.blue("New migration contents:"),

@@ -1,4 +1,4 @@
--- HotUpdater.bundles
+-- CodeUpdater.bundles
 
 CREATE TYPE platforms AS ENUM ('ios', 'android');
 

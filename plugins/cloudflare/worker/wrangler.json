@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "hot-updater",
+  "name": "code-updater",
   "main": "dist/index.js",
   "compatibility_date": "2025-01-24",
   "compatibility_flags": ["nodejs_compat"],

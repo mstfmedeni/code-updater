@@ -31,7 +31,7 @@ export interface RunUpdateProcessConfig extends CheckForUpdateConfig {
  * @example
  * ```ts
  * // Auto reload on force update
- * const result = await HotUpdater.runUpdateProcess({
+ * const result = await CodeUpdater.runUpdateProcess({
  *   source: "<your-update-server-url>",
  *   requestHeaders: {
  *     // Add necessary headers
@@ -40,13 +40,13 @@ export interface RunUpdateProcessConfig extends CheckForUpdateConfig {
  * });
  *
  * // Manually handle reload on force update
- * const result = await HotUpdater.runUpdateProcess({
+ * const result = await CodeUpdater.runUpdateProcess({
  *   source: "<your-update-server-url>",
  *   reloadOnForceUpdate: false
  * });
  *
  * if(result.status !== "UP_TO_DATE" && result.shouldForceUpdate) {
- *   HotUpdater.reload();
+ *   CodeUpdater.reload();
  * }
  * ```
  *

@@ -1,5 +1,5 @@
-import type { Bundle, GetBundlesArgs, UpdateInfo } from "@hot-updater/core";
-import { setupGetUpdateInfoTestSuite } from "@hot-updater/core/test-utils";
+import type { Bundle, GetBundlesArgs, UpdateInfo } from "@code-updater/core";
+import { setupGetUpdateInfoTestSuite } from "@code-updater/core/test-utils";
 import { beforeAll, beforeEach, describe, inject } from "vitest";
 import { getUpdateInfo as getUpdateInfoFromWorker } from "./getUpdateInfo";
 

@@ -1,0 +1,84 @@
+# `CodeUpdater.addEventListener()`
+
+The `addEventListener` function allows you to listen for specific events emitted by the CodeUpdater. This is useful for tracking update progress or other events during the update process.
+
+::: warning
+For most use cases involving bundle download progress bar displays, it's more convenient to use the store hook instead of this listener. See [useCodeUpdaterStore](./useCodeUpdaterStore.mdx).
+:::
+
+## Usage
+
+Use `addEventListener` to subscribe to CodeUpdater events. It returns an unsubscribe function to clean up the listener when it's no longer needed.
+
+```tsx
+import { CodeUpdater } from "@code-updater/react-native";
+
+const unsubscribe = CodeUpdater.addListener("onProgress", ({ progress }) => {
+  console.log(`Update progress: ${progress * 100}%`);
+});
+
+// Later, when you no longer need the listener
+unsubscribe();
+```
+
+## Event Type
+
+The `CodeUpdaterEvent` type defines the available events and their corresponding payloads.
+
+```typescript
+export type CodeUpdaterEvent = {
+  onProgress: {
+    progress: number;
+  };
+};
+```
+
+## Parameters
+
+| Parameter   | Type                                  | Required | Description                                 |
+|-------------|---------------------------------------|----------|---------------------------------------------|
+| `eventName` | `keyof CodeUpdaterEvent`                | ✅        | The name of the event to listen for.          |
+| `listener`  | `(event: CodeUpdaterEvent[T]) => void` | ✅        | The callback function to handle the event.    |
+
+## Return Value
+
+The `addEventListener` function returns a cleanup function that removes the event listener when called.
+
+```typescript
+const unsubscribe = CodeUpdater.addListener("onProgress", ({ progress }) => {
+  console.log(`Update progress: ${progress * 100}%`);
+});
+
+// Unsubscribe when done
+unsubscribe();
+```
+
+## Example
+
+Here's an example of how to use `addEventListener` in a React Native component:
+
+```tsx
+import React, { useEffect } from "react";
+import { addListener } from "@code-updater/react-native";
+import { View, Text } from "react-native";
+
+function App() {
+  useEffect(() => {
+    const unsubscribe = addListener("onProgress", ({ progress }) => {
+      console.log(`Update progress: ${progress * 100}%`);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  return (
+    <View>
+      <Text>Hello World</Text>
+    </View>
+  );
+}
+
+export default App;
+```

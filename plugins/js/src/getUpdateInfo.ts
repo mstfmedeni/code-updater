@@ -4,7 +4,7 @@ import {
   NIL_UUID,
   type UpdateInfo,
   type UpdateStatus,
-} from "@hot-updater/core";
+} from "@code-updater/core";
 import { checkForRollback } from "./checkForRollback";
 import { semverSatisfies } from "./semverSatisfies";
 

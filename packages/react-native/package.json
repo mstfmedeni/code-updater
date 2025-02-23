@@ -1,5 +1,5 @@
 {
-  "name": "@hot-updater/react-native",
+  "name": "@code-updater/react-native",
   "version": "0.12.2",
   "description": "React Native OTA solution for self-hosted",
   "main": "dist/index.js",
@@ -44,12 +44,12 @@
     "self-hosted"
   ],
   "license": "MIT",
-  "repository": "https://github.com/gronxb/hot-updater",
-  "author": "gronxb <gron1gh1@gmail.com> (https://github.com/gronxb)",
+  "repository": "https://github.com/mstfmedeni/code-updater",
+  "author": "mstfmedeni <mustafa@medeni.dev> (https://github.com/mstfmedeni)",
   "bugs": {
-    "url": "https://github.com/gronxb/hot-updater/issues"
+    "url": "https://github.com/mstfmedeni/code-updater/issues"
   },
-  "homepage": "https://github.com/gronxb/hot-updater#readme",
+  "homepage": "https://github.com/mstfmedeni/code-updater#readme",
   "publishConfig": {
     "access": "public"
   },
@@ -61,7 +61,7 @@
     ]
   },
   "codegenConfig": {
-    "name": "HotUpdaterSpec",
+    "name": "CodeUpdaterSpec",
     "type": "modules",
     "jsSrcsDir": "src/specs",
     "outputDir": {
@@ -69,7 +69,7 @@
       "android": "android/generated"
     },
     "android": {
-      "javaPackageName": "com.hotupdater"
+      "javaPackageName": "com.codeupdater"
     },
     "includesGeneratedCode": true
   },
@@ -85,7 +85,7 @@
     "react-native-builder-bob": "^0.33.1"
   },
   "dependencies": {
-    "@hot-updater/js": "0.12.2",
-    "@hot-updater/core": "0.12.2"
+    "@code-updater/js": "0.12.2",
+    "@code-updater/core": "0.12.2"
   }
 }

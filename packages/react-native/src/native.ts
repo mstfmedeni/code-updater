@@ -2,13 +2,13 @@ import { NativeEventEmitter, NativeModules, Platform } from "react-native";
 
 const NIL_UUID = "00000000-0000-0000-0000-000000000000";
 
-const HotUpdater = {
-  HOT_UPDATER_BUNDLE_ID: NIL_UUID,
+const CodeUpdater = {
+  CODE_UPDATER_BUNDLE_ID: NIL_UUID,
 };
 
 const LINKING_ERROR =
   // biome-ignore lint/style/useTemplate: <explanation>
-  `The package '@hot-updater/react-native' doesn't seem to be linked. Make sure: \n\n` +
+  `The package '@code-updater/react-native' doesn't seem to be linked. Make sure: \n\n` +
   Platform.select({ ios: "- You have run 'pod install'\n", default: "" }) +
   "- You rebuilt the app after installing the package\n" +
   "- You are not using Expo Go\n";
@@ -16,12 +16,12 @@ const LINKING_ERROR =
 // @ts-expect-error
 const isTurboModuleEnabled = global.__turboModuleProxy != null;
 
-const HotUpdaterModule = isTurboModuleEnabled
-  ? require("./specs/NativeHotUpdater").default
-  : NativeModules.HotUpdater;
+const CodeUpdaterModule = isTurboModuleEnabled
+  ? require("./specs/NativeCodeUpdater").default
+  : NativeModules.CodeUpdater;
 
-const HotUpdaterNative = HotUpdaterModule
-  ? HotUpdaterModule
+const CodeUpdaterNative = CodeUpdaterModule
+  ? CodeUpdaterModule
   : new Proxy(
       {},
       {
@@ -31,17 +31,17 @@ const HotUpdaterNative = HotUpdaterModule
       },
     );
 
-export type HotUpdaterEvent = {
+export type CodeUpdaterEvent = {
   onProgress: {
     progress: number;
   };
 };
 
-export const addListener = <T extends keyof HotUpdaterEvent>(
+export const addListener = <T extends keyof CodeUpdaterEvent>(
   eventName: T,
-  listener: (event: HotUpdaterEvent[T]) => void,
+  listener: (event: CodeUpdaterEvent[T]) => void,
 ) => {
-  const eventEmitter = new NativeEventEmitter(HotUpdaterNative);
+  const eventEmitter = new NativeEventEmitter(CodeUpdaterNative);
   const subscription = eventEmitter.addListener(eventName, listener);
 
   return () => {
@@ -60,14 +60,14 @@ export const updateBundle = (
   bundleId: string,
   zipUrl: string | null,
 ): Promise<boolean> => {
-  return HotUpdaterNative.updateBundle(bundleId, zipUrl);
+  return CodeUpdaterNative.updateBundle(bundleId, zipUrl);
 };
 
 /**
  * Fetches the current app version.
  */
 export const getAppVersion = (): Promise<string | null> => {
-  return HotUpdaterNative.getAppVersion();
+  return CodeUpdaterNative.getAppVersion();
 };
 
 /**
@@ -75,7 +75,7 @@ export const getAppVersion = (): Promise<string | null> => {
  */
 export const reload = () => {
   requestAnimationFrame(() => {
-    HotUpdaterNative.reload();
+    CodeUpdaterNative.reload();
   });
 };
 
@@ -86,5 +86,5 @@ export const reload = () => {
  * @returns {Promise<string>} Resolves with the current version id or null if not available.
  */
 export const getBundleId = (): string => {
-  return HotUpdater.HOT_UPDATER_BUNDLE_ID;
+  return CodeUpdater.CODE_UPDATER_BUNDLE_ID;
 };

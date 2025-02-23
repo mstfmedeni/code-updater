@@ -5,19 +5,19 @@
  * @format
  */
 
-import { HotUpdater, useHotUpdaterStore } from "@hot-updater/react-native";
+import { CodeUpdater, useCodeUpdaterStore } from "@code-updater/react-native";
 // biome-ignore lint/style/useImportType: <explanation>
 import React from "react";
 import { useEffect, useState } from "react";
 import { Button, Image, Modal, SafeAreaView, Text, View } from "react-native";
 
-import { HOT_UPDATER_SUPABASE_URL } from "@env";
+import { CODE_UPDATER_SUPABASE_URL } from "@env";
 
 function App(): React.JSX.Element {
   const [bundleId, setBundleId] = useState<string | null>(null);
 
   useEffect(() => {
-    const bundleId = HotUpdater.getBundleId();
+    const bundleId = CodeUpdater.getBundleId();
     setBundleId(bundleId);
   }, []);
 
@@ -26,10 +26,10 @@ function App(): React.JSX.Element {
   // @ts-ignore
   const isHermes = () => !!global.HermesInternal;
 
-  const { progress } = useHotUpdaterStore();
+  const { progress } = useCodeUpdaterStore();
   return (
     <SafeAreaView>
-      <Text>Babel {HotUpdater.getBundleId()}</Text>
+      <Text>Babel {CodeUpdater.getBundleId()}</Text>
       <Text
         style={{
           marginVertical: 20,
@@ -38,7 +38,7 @@ function App(): React.JSX.Element {
           textAlign: "center",
         }}
       >
-        Hot Updater 0
+        Code Updater 0
       </Text>
 
       <Text
@@ -92,12 +92,12 @@ function App(): React.JSX.Element {
         // source={require("./src/test/_image.png")}
       />
 
-      <Button title="Reload" onPress={() => HotUpdater.reload()} />
+      <Button title="Reload" onPress={() => CodeUpdater.reload()} />
       <Button
-        title="HotUpdater.runUpdateProcess()"
+        title="CodeUpdater.runUpdateProcess()"
         onPress={() =>
-          HotUpdater.runUpdateProcess({
-            source: `${HOT_UPDATER_SUPABASE_URL}/functions/v1/update-server`,
+          CodeUpdater.runUpdateProcess({
+            source: `${CODE_UPDATER_SUPABASE_URL}/functions/v1/update-server`,
           }).then((status) => {
             console.log("Update process completed", JSON.stringify(status));
           })
@@ -107,8 +107,8 @@ function App(): React.JSX.Element {
   );
 }
 
-export default HotUpdater.wrap({
-  source: `${HOT_UPDATER_SUPABASE_URL}/functions/v1/update-server`,
+export default CodeUpdater.wrap({
+  source: `${CODE_UPDATER_SUPABASE_URL}/functions/v1/update-server`,
   fallbackComponent: ({ progress, status }) => (
     <Modal transparent visible={true}>
       <View

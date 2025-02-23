@@ -1,4 +1,4 @@
--- HotUpdater.semver_satisfies
+-- CodeUpdater.semver_satisfies
 
 CREATE OR REPLACE FUNCTION semver_satisfies(range_expression TEXT, version TEXT)
 RETURNS BOOLEAN AS $$

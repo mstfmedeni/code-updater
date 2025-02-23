@@ -7,7 +7,7 @@ import {
   NoSuchKey,
   S3Client,
 } from "@aws-sdk/client-s3";
-import type { Bundle } from "@hot-updater/plugin-core";
+import type { Bundle } from "@code-updater/plugin-core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { s3Database } from "./s3Database";
 

@@ -20,7 +20,7 @@ import {
 import { api, createBundleQuery, createConfigQuery } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
-import type { Bundle } from "@hot-updater/plugin-core";
+import type { Bundle } from "@code-updater/plugin-core";
 import { createForm } from "@tanstack/solid-form";
 import { useQueryClient } from "@tanstack/solid-query";
 import { LoaderCircle } from "lucide-solid";

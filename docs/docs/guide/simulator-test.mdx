@@ -5,11 +5,11 @@ import { normalizeImagePath } from 'rspress/runtime';
 
 # Simulate Release Mode
 
-Since hot-updater does not work in dev environment, you need to test it in Release mode as shown below.
+Since code-updater does not work in dev environment, you need to test it in Release mode as shown below.
 
 ## Checklist
-- Make sure `hot-updater.config.ts` is properly configured.
-- Make sure `HotUpdater.wrap` is properly implemented.
+- Make sure `code-updater.config.ts` is properly configured.
+- Make sure `CodeUpdater.wrap` is properly implemented.
 
 
 ## Step 1: Simulator Release Mode
@@ -42,11 +42,11 @@ Use the commands below to simulate downloading from the app store. Running in Re
 
 ## Step 2: Deploy
 
-Deploy with interactive mode and force update flag enabled in hot-updater deploy mode.
+Deploy with interactive mode and force update flag enabled in code-updater deploy mode.
 
-When [`HotUpdater.wrap`](./hot-updater/wrap.mdx) is set up, updates will be applied either when you restart the app or call [`HotUpdater.runUpdateProcess`](./hot-updater/runUpdateProcess.mdx).
+When [`CodeUpdater.wrap`](./code-updater/wrap.mdx) is set up, updates will be applied either when you restart the app or call [`CodeUpdater.runUpdateProcess`](./code-updater/runUpdateProcess.mdx).
 
-You can check the update progress status using [`useHotUpdaterStore`](./hot-updater/useHotUpdaterStore.mdx).
+You can check the update progress status using [`useCodeUpdaterStore`](./code-updater/useCodeUpdaterStore.mdx).
 
 
 <video src={normalizeImagePath("/guide/deploy/deploy.mov")}  controls autoPlay loop muted />
@@ -58,9 +58,9 @@ This is the standard deployment mode. After an update is created, users need to 
 
 <PackageManagerTabs command={
   {
-    npm: "npx hot-updater deploy -i",
-    pnpm: "pnpm hot-updater deploy -i",
-    yarn: "yarn hot-updater deploy -i",
+    npm: "npx code-updater deploy -i",
+    pnpm: "pnpm code-updater deploy -i",
+    yarn: "yarn code-updater deploy -i",
   }
 } />
 
@@ -71,9 +71,9 @@ This is the emergency deployment mode. After an update is created, the bundle wi
 
 <PackageManagerTabs command={
   {
-    npm: "npx hot-updater deploy -i --force-update",
-    pnpm: "pnpm hot-updater deploy -i --force-update",
-    yarn: "yarn hot-updater deploy -i --force-update",
+    npm: "npx code-updater deploy -i --force-update",
+    pnpm: "pnpm code-updater deploy -i --force-update",
+    yarn: "yarn code-updater deploy -i --force-update",
   }
 } />
 
@@ -88,9 +88,9 @@ Open the console and set the bundle's `enabled` status to `false`.
 
 <PackageManagerTabs command={
   {
-    npm: "npx hot-updater console",
-    pnpm: "pnpm hot-updater console",
-    yarn: "yarn hot-updater console",
+    npm: "npx code-updater console",
+    pnpm: "pnpm code-updater console",
+    yarn: "yarn code-updater console",
   }
 } />
 

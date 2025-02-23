@@ -6,7 +6,7 @@ export const SplashScreen = () => {
       <div class="w-32 h-32 md:w-48 md:h-48 relative">
         <img
           src={logo}
-          alt="Hot Updater Console"
+          alt="Code Updater Console"
           class="w-full h-full object-contain"
         />
       </div>

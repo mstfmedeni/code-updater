@@ -15,7 +15,7 @@ export default function App() {
       <Router
         root={(props) => (
           <MetaProvider>
-            <Title>HotUpdater Console</Title>
+            <Title>CodeUpdater Console</Title>
             <Suspense fallback={<SplashScreen />}>
               <Layout>{props.children}</Layout>
             </Suspense>

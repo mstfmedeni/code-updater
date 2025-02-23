@@ -4,7 +4,7 @@ import { normalizeImagePath } from 'rspress/runtime';
 
 # AWS S3 Storage + Lambda@Edge Function
 
-This guide walks you through setting up `hot-updater` with AWS S3 Storage and Lambda@Edge Function in a React Native project. You'll configure the environment, install required packages, and initialize AWS for seamless updates.
+This guide walks you through setting up `code-updater` with AWS S3 Storage and Lambda@Edge Function in a React Native project. You'll configure the environment, install required packages, and initialize AWS for seamless updates.
 
 <video src={normalizeImagePath("/guide/getting-started/init-aws.mov")} controls autoPlay loop muted />
 
@@ -17,11 +17,11 @@ Before you begin, make sure the following are ready:
 
 ## Required AWS Permissions
 
-Hot Updater requires specific AWS IAM permissions for setup and ongoing usage:
+Code Updater requires specific AWS IAM permissions for setup and ongoing usage:
 
 ### 1. Initialization (One-Time Setup)
 
-Used for `hot-updater init`:
+Used for `code-updater init`:
 * `AmazonS3FullAccess`: Create and read S3 buckets.
 * `AWSLambda_FullAccess`: Create and update Lambda functions.
 * `CloudFrontFullAccess`: Manage CloudFront distributions.
@@ -29,7 +29,7 @@ Used for `hot-updater init`:
 
 ### 2. Ongoing Usage
 
-Used for `hot-updater deploy` and `hot-updater console`:
+Used for `code-updater deploy` and `code-updater console`:
 * `AmazonS3FullAccess`: Manage bundles and metadata in the S3 bucket.
 
 For ongoing usage, create a separate access token with limited permissions.
@@ -40,9 +40,9 @@ Run the following command to install dependencies:
 
 <PackageManagerTabs command={
   {
-    npm: "npm install hot-updater --save-dev",
-    pnpm: "pnpm add hot-updater -D",
-    yarn: "yarn add hot-updater -D",
+    npm: "npm install code-updater --save-dev",
+    pnpm: "pnpm add code-updater -D",
+    yarn: "yarn add code-updater -D",
   }
 } />
 
@@ -52,9 +52,9 @@ Run the initialization script to start the interactive setup process. Use the fo
 
 <PackageManagerTabs command={
   {
-    npm: "npx hot-updater init",
-    pnpm: "pnpm hot-updater init",
-    yarn: "yarn hot-updater init",
+    npm: "npx code-updater init",
+    pnpm: "pnpm code-updater init",
+    yarn: "yarn code-updater init",
   }
 } />
 
@@ -77,12 +77,12 @@ Once the setup is complete, a `.env` file will be generated containing the follo
 
 ```
 # This key was generated via SSO login and may expire. Update it with an S3FullAccess-only key.
-HOT_UPDATER_S3_ACCESS_KEY_ID=your-access-key-id
+CODE_UPDATER_S3_ACCESS_KEY_ID=your-access-key-id
 # This key was generated via SSO login and may expire. Update it with an S3FullAccess-only key.
-HOT_UPDATER_S3_SECRET_ACCESS_KEY=your-secret-access-key
+CODE_UPDATER_S3_SECRET_ACCESS_KEY=your-secret-access-key
 
-HOT_UPDATER_S3_BUCKET_NAME=your-s3-bucket-name
-HOT_UPDATER_S3_REGION=your-region
+CODE_UPDATER_S3_BUCKET_NAME=your-s3-bucket-name
+CODE_UPDATER_S3_REGION=your-region
 ```
 
 
@@ -99,21 +99,21 @@ please refer to the article below for more details:
 ## Step 3: Generated Configurations
 During the initialization process, the following file is automatically generated:
 
-- `hot-updater.config.ts`: This file contains the configuration settings for integrating AWS with your project.
+- `code-updater.config.ts`: This file contains the configuration settings for integrating AWS with your project.
 
-```ts title=hot-updater.config.ts
+```ts title=code-updater.config.ts
 
-import { metro } from "@hot-updater/metro";
-import { s3Storage, s3Database } from "@hot-updater/aws";
-import { defineConfig } from "hot-updater";
+import { metro } from "@code-updater/metro";
+import { s3Storage, s3Database } from "@code-updater/aws";
+import { defineConfig } from "code-updater";
 import "dotenv/config";
 
 const options = {
-  bucketName: process.env.HOT_UPDATER_S3_BUCKET_NAME!,
-  region: process.env.HOT_UPDATER_S3_REGION!,
+  bucketName: process.env.CODE_UPDATER_S3_BUCKET_NAME!,
+  region: process.env.CODE_UPDATER_S3_REGION!,
   credentials: {
-    accessKeyId: process.env.HOT_UPDATER_S3_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.HOT_UPDATER_S3_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.CODE_UPDATER_S3_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.CODE_UPDATER_S3_SECRET_ACCESS_KEY!,
   },
 };
 
@@ -126,24 +126,24 @@ export default defineConfig({
 
 ## Step 4: Change `.env` file (Optional)
 
-By this point, the .env file should already be created. The token inside was generated when you ran the `hot-updater init` command.
+By this point, the .env file should already be created. The token inside was generated when you ran the `code-updater init` command.
 
 The token may have excessive permissions due to infrastructure setup or expire if SSO was used.
 
 To avoid issues, update it with a permanent token with `S3FullAccess` only.
 
 ```ts title=.env
-HOT_UPDATER_S3_ACCESS_KEY_ID=your-access-key-id
-HOT_UPDATER_S3_SECRET_ACCESS_KEY=your-secret-access-key
+CODE_UPDATER_S3_ACCESS_KEY_ID=your-access-key-id
+CODE_UPDATER_S3_SECRET_ACCESS_KEY=your-secret-access-key
 ```
 
 
-## Step 5: Add HotUpdater to Your Project
+## Step 5: Add CodeUpdater to Your Project
 
-The HotUpdater component wraps your application, enabling seamless delivery of updates and fallback UI during updates. Follow these steps to integrate it into your App.tsx:
+The CodeUpdater component wraps your application, enabling seamless delivery of updates and fallback UI during updates. Follow these steps to integrate it into your App.tsx:
 
 ```tsx title=App.tsx
-import { HotUpdater } from "@hot-updater/react-native";
+import { CodeUpdater } from "@code-updater/react-native";
 
 function App() {
   return (
@@ -153,7 +153,7 @@ function App() {
   );
 }
 
-export default HotUpdater.wrap({ 
+export default CodeUpdater.wrap({ 
   source: "https://<your-distribution-id>.cloudfront.net/api/check-update", // [!code ++]
   requestHeaders: {
     // if you want to use the request headers, you can add them here
@@ -187,7 +187,7 @@ export default HotUpdater.wrap({
 
 ## Step 6: Add Babel Plugin to Your Project
 
-In this step, you will configure Babel to set the bundle ID at build time. This is necessary for integrating the `hot-updater` plugin into your project.
+In this step, you will configure Babel to set the bundle ID at build time. This is necessary for integrating the `code-updater` plugin into your project.
 
 Add the following to your `babel.config.js` file:
 
@@ -195,21 +195,21 @@ Add the following to your `babel.config.js` file:
 module.exports = {
   presets: ['module:@react-native/babel-preset'],
   plugins: [
-    'hot-updater/babel-plugin', // [!code ++]
+    'code-updater/babel-plugin', // [!code ++]
   ],
 };
 ```
 
 ## Step 7: Add Native Code
 
-To complete the integration of `hot-updater`, you'll need to add native code modifications for both Android and iOS platforms. This step ensures the `hot-updater` can interact with your app's underlying framework to apply updates seamlessly.
+To complete the integration of `code-updater`, you'll need to add native code modifications for both Android and iOS platforms. This step ensures the `code-updater` can interact with your app's underlying framework to apply updates seamlessly.
 
 ### Android
 
 <Tabs>
     <Tab label="Kotlin">
 ```kt title=android/app/src/main/java/com/<your-app-name>/MainApplication.kt
-package com.hotupdaterexample
+package com.codeupdaterexample
 
 import android.app.Application
 import com.facebook.react.PackageList
@@ -222,7 +222,7 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.soloader.OpenSourceMergedSoMapping
 import com.facebook.soloader.SoLoader
-import com.hotupdater.HotUpdater // [!code ++]
+import com.codeupdater.CodeUpdater // [!code ++]
 
 class MainApplication : Application(), ReactApplication {
 
@@ -242,7 +242,7 @@ class MainApplication : Application(), ReactApplication {
         override val isHermesEnabled: Boolean = BuildConfig.IS_HERMES_ENABLED
 
         override fun getJSBundleFile(): String? {  // [!code ++]
-          return HotUpdater.getJSBundleFile(applicationContext)  // [!code ++]
+          return CodeUpdater.getJSBundleFile(applicationContext)  // [!code ++]
         }  // [!code ++]
       }
 
@@ -287,7 +287,7 @@ class MainApplication : Application(), ReactApplication {
   ```
   ```java title=android/app/src/main/java/com/<your-app-name>/MainApplication.java
 
-package com.hotupdaterexample;
+package com.codeupdaterexample;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
@@ -298,7 +298,7 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
-import com.hotupdater.HotUpdater;  // [!code ++]
+import com.codeupdater.CodeUpdater;  // [!code ++]
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -324,7 +324,7 @@ public class MainApplication extends Application implements ReactApplication {
         
         @Override // [!code ++]
         protected String getJSBundleFile() {  // [!code ++]
-            return HotUpdater.Companion.getJSBundleFile(this.getApplication().getApplicationContext());  // [!code ++]
+            return CodeUpdater.Companion.getJSBundleFile(this.getApplication().getApplicationContext());  // [!code ++]
         }  // [!code ++]
 
         @Override
@@ -366,14 +366,14 @@ public class MainApplication extends Application implements ReactApplication {
     <Tab label="Objective-C">
 ```objc title=ios/<your-app-name>/AppDelegate.mm
 #import "AppDelegate.h"
-#import <HotUpdater/HotUpdater.h> // [!code ++]
+#import <CodeUpdater/CodeUpdater.h> // [!code ++]
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.moduleName = @"HotUpdaterExample";
+  self.moduleName = @"CodeUpdaterExample";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
@@ -393,7 +393,7 @@ public class MainApplication extends Application implements ReactApplication {
 #else // [!code --]
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"]; // [!code --]
 #endif // [!code --]
-  return [HotUpdater bundleURL]; // [!code ++]
+  return [CodeUpdater bundleURL]; // [!code ++]
 }
 
 @end
@@ -405,12 +405,12 @@ import UIKit
 import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
-import HotUpdater // [!code ++]
+import CodeUpdater // [!code ++]
 
 @main
 class AppDelegate: RCTAppDelegate {
   override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    self.moduleName = "HotUpdaterExample"
+    self.moduleName = "CodeUpdaterExample"
     self.dependencyProvider = RCTAppDependencyProvider()
 
     // You can add your custom initial props in the dictionary below.
@@ -430,7 +430,7 @@ class AppDelegate: RCTAppDelegate {
 #else // [!code --]
     Bundle.main.url(forResource: "main", withExtension: "jsbundle") // [!code --]
 #endif // [!code --]
-    HotUpdater.bundleURL() // [!code ++]
+    CodeUpdater.bundleURL() // [!code ++]
   }
 }
 
@@ -441,9 +441,9 @@ class AppDelegate: RCTAppDelegate {
 
 ## Verifying the Setup
 1. Check your AWS dashboard for the newly created bucket, Lambda@Edge function, and CloudFront distribution.
-2. Test the HotUpdater integration in your React Native app.
+2. Test the CodeUpdater integration in your React Native app.
 
 
-You're all set! 🎉 Start using hot-updater with AWS for seamless updates in your React Native app.
+You're all set! 🎉 Start using code-updater with AWS for seamless updates in your React Native app.
 
 This document simplifies the initialization process, making it easy for developers to get started with minimal friction.

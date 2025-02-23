@@ -13,9 +13,9 @@ Run the following command:
 
 <PackageManagerTabs command={
   {
-    npm: "npx hot-updater get-plugin-env",
-    pnpm: "pnpm hot-updater get-plugin-env",
-    yarn: "yarn hot-updater get-plugin-env",
+    npm: "npx code-updater get-plugin-env",
+    pnpm: "pnpm code-updater get-plugin-env",
+    yarn: "yarn code-updater get-plugin-env",
   }
 } />
 
@@ -27,33 +27,33 @@ please refer to the article below for more details:
 [Security](../security.mdx#plugin-token-protection)
 :::
 
-Take the output of this command and add it to your `.env` file. Then inject the appropriate values into `hot-updater.config.ts`. For example, if you're using Supabase:
+Take the output of this command and add it to your `.env` file. Then inject the appropriate values into `code-updater.config.ts`. For example, if you're using Supabase:
 
 Given the following output:
 ```ts title=".env"
-HOT_UPDATER_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-HOT_UPDATER_SUPABASE_BUCKET_NAME=bundle
-HOT_UPDATER_SUPABASE_URL=https://abcd.supabase.co
+CODE_UPDATER_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+CODE_UPDATER_SUPABASE_BUCKET_NAME=bundle
+CODE_UPDATER_SUPABASE_URL=https://abcd.supabase.co
 ```
 
-Add it to your .env file and configure hot-updater.config.ts like this:
+Add it to your .env file and configure code-updater.config.ts like this:
 
-```ts title="hot-updater.config.ts"
-import { metro } from "@hot-updater/metro";
-import { supabaseDatabase, supabaseStorage } from "@hot-updater/supabase";
-import { defineConfig } from "hot-updater";
+```ts title="code-updater.config.ts"
+import { metro } from "@code-updater/metro";
+import { supabaseDatabase, supabaseStorage } from "@code-updater/supabase";
+import { defineConfig } from "code-updater";
 import "dotenv/config";
 
 export default defineConfig({
   build: metro({ enableHermes: true }),
   storage: supabaseStorage({
-    supabaseUrl: process.env.HOT_UPDATER_SUPABASE_URL!,
-    supabaseAnonKey: process.env.HOT_UPDATER_SUPABASE_ANON_KEY!,
-    bucketName: process.env.HOT_UPDATER_SUPABASE_BUCKET_NAME!,
+    supabaseUrl: process.env.CODE_UPDATER_SUPABASE_URL!,
+    supabaseAnonKey: process.env.CODE_UPDATER_SUPABASE_ANON_KEY!,
+    bucketName: process.env.CODE_UPDATER_SUPABASE_BUCKET_NAME!,
   }),
   database: supabaseDatabase({
-    supabaseUrl: process.env.HOT_UPDATER_SUPABASE_URL!,
-    supabaseAnonKey: process.env.HOT_UPDATER_SUPABASE_ANON_KEY!,
+    supabaseUrl: process.env.CODE_UPDATER_SUPABASE_URL!,
+    supabaseAnonKey: process.env.CODE_UPDATER_SUPABASE_ANON_KEY!,
   }),
 });
 ```

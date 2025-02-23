@@ -1,3 +1,3 @@
-# Hot Updater
+# Code Updater
 
 A self-hostable OTA (Over-The-Air) update solution for React Native.

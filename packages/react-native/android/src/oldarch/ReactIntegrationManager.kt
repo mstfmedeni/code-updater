@@ -1,4 +1,4 @@
-package com.hotupdater
+package com.codeupdater
 
 import android.content.Context
 import android.util.Log
@@ -26,7 +26,7 @@ class ReactIntegrationManager(
                 bundleLoaderField.set(instanceManager, null)
             }
         } catch (e: Exception) {
-            Log.d("HotUpdater", "Failed to setJSBundle: ${e.message}")
+            Log.d("CodeUpdater", "Failed to setJSBundle: ${e.message}")
             throw IllegalAccessException("Could not setJSBundle")
         }
     }
