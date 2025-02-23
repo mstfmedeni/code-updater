@@ -14,7 +14,7 @@
     "test:type": "nx run-many --target=test:type --all",
     "release:test": "nx release --dry-run",
     "release": "pnpm clear && pnpm build && nx release --skip-publish",
-    "publish:all": "nx release publish",
+    "publish:all": "nx release publish --access public",
     "publish:rc": "nx release publish --tag rc"
   },
   "devDependencies": {

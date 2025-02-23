@@ -1,6 +1,7 @@
 {
   "name": "@code-updater/console",
   "type": "module",
+   "private": false,
   "version": "1.0.0",
   "files": [
     "dist",
