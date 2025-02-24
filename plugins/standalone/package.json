@@ -1,6 +1,6 @@
 {
   "name": "@code-updater/standalone",
-  "version": "1.1.0",
+  "version": "1.2.0-0",
   "type": "module",
   "description": "React Native OTA solution for self-hosted",
   "sideEffects": false,
@@ -42,8 +42,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@code-updater/core": "1.1.0",
-    "@code-updater/plugin-core": "1.1.0"
+    "@code-updater/core": "1.2.0-0",
+    "@code-updater/plugin-core": "1.2.0-0"
   },
   "devDependencies": {
     "@types/node": "^20.9.4",
