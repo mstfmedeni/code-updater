@@ -13,12 +13,12 @@ export const loadConfig = async (
   const result = await cosmiconfig("code-updater", {
     stopDir: getCwd(),
     searchPlaces: [
-      "hot-updater.config.js",
-      "hot-updater.config.cjs",
-      "hot-updater.config.ts",
-      "hot-updater.config.cts",
-      "hot-updater.config.mjs",
-      "hot-updater.config.cjs",
+      "code-updater.config.js",
+      "code-updater.config.cjs",
+      "code-updater.config.ts",
+      "code-updater.config.cts",
+      "code-updater.config.mjs",
+      "code-updater.config.cjs",
     ],
     ignoreEmptySearchPlaces: false,
     loaders: {
