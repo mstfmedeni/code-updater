@@ -12,9 +12,6 @@ hero:
     - theme: alt
       text: GitHub
       link: https://github.com/mstfmedeni/code-updater
-  image:
-    src: /logo.png
-    alt: Logo
 features:
   - title: React Native OTA
     details: Deliver over-the-air (OTA) updates for your React Native apps without needing App Store or Google Play submissions.
