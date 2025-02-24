@@ -39,12 +39,12 @@ const createCodeUpdaterStore = () => {
   return { getSnapshot, setProgress, subscribe };
 };
 
-export const hotUpdaterStore = createCodeUpdaterStore();
+export const codeUpdaterStore = createCodeUpdaterStore();
 
 export const useCodeUpdaterStore = () => {
   return useSyncExternalStore(
-    hotUpdaterStore.subscribe,
-    hotUpdaterStore.getSnapshot,
-    hotUpdaterStore.getSnapshot,
+    codeUpdaterStore.subscribe,
+    codeUpdaterStore.getSnapshot,
+    codeUpdaterStore.getSnapshot,
   );
 };

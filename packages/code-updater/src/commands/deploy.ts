@@ -58,7 +58,7 @@ export const deploy = async (options: DeployOptions) => {
   const defaultTargetAppVersion =
     (await getDefaultTargetAppVersion(cwd, platform)) ?? "1.0.0";
 
-  const config = await loadConfig(platform);
+  const config = await loadConfig({ platform });
   if (!config) {
     console.error("No config found. Please run `code-updater init` first.");
     process.exit(1);

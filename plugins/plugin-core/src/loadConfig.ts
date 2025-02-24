@@ -1,28 +1,25 @@
 import { cosmiconfig } from "cosmiconfig";
 import { TypeScriptLoader } from "cosmiconfig-typescript-loader";
 import { getCwd } from "./cwd.js";
-import type { Config } from "./types.js";
+import type { Config, Platform } from "./types.js";
 
-export const loadConfig = async (platform = ""): Promise<Config | null> => {
-  const searchPathList = [
-    "code-updater.config.js",
-    "code-updater.config.cjs",
-    "code-updater.config.ts",
-    "code-updater.config.cts",
-    "code-updater.config.mjs",
-  ];
+export interface CodeUpdaterConfigOptions {
+  platform: Platform | "console";
+}
 
-  if (platform === "ios" || platform === "android") {
-    searchPathList.unshift(`code-updater.config.${platform}.js`);
-    searchPathList.unshift(`code-updater.config.${platform}.cjs`);
-    searchPathList.unshift(`code-updater.config.${platform}.ts`);
-    searchPathList.unshift(`code-updater.config.${platform}.cts`);
-    searchPathList.unshift(`code-updater.config.${platform}.mjs`);
-  }
-
+export const loadConfig = async (
+  options: CodeUpdaterConfigOptions,
+): Promise<Config | null> => {
   const result = await cosmiconfig("code-updater", {
     stopDir: getCwd(),
-    searchPlaces: searchPathList,
+    searchPlaces: [
+      "hot-updater.config.js",
+      "hot-updater.config.cjs",
+      "hot-updater.config.ts",
+      "hot-updater.config.cts",
+      "hot-updater.config.mjs",
+      "hot-updater.config.cjs",
+    ],
     ignoreEmptySearchPlaces: false,
     loaders: {
       ".ts": TypeScriptLoader(),
@@ -33,6 +30,10 @@ export const loadConfig = async (platform = ""): Promise<Config | null> => {
 
   if (!result?.config) {
     return null;
+  }
+
+  if (typeof result.config === "function") {
+    return await result.config(options);
   }
 
   return result.config as Config;

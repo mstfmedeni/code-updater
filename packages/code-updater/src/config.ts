@@ -1,5 +1,13 @@
-import type { Config } from "@code-updater/plugin-core";
+import type {
+  CodeUpdaterConfigOptions,
+  Config,
+} from "@code-updater/plugin-core";
 
 export const defineConfig = async (
-  config: Config | (() => Config) | (() => Promise<Config>),
-): Promise<Config> => (typeof config === "function" ? await config() : config);
+  config:
+    | Config
+    | ((options: CodeUpdaterConfigOptions) => Config)
+    | ((options: CodeUpdaterConfigOptions) => Promise<Config>),
+) => {
+  return config;
+};

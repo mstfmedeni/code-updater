@@ -7,7 +7,7 @@ import {
   updateBundle,
 } from "./native";
 import { runUpdateProcess } from "./runUpdateProcess";
-import { hotUpdaterStore } from "./store";
+import { codeUpdaterStore } from "./store";
 import { wrap } from "./wrap";
 
 export type { CodeUpdaterConfig } from "./wrap";
@@ -16,7 +16,7 @@ export type { CodeUpdaterEvent } from "./native";
 export * from "./store";
 
 addListener("onProgress", ({ progress }) => {
-  hotUpdaterStore.setProgress(progress);
+  codeUpdaterStore.setProgress(progress);
 });
 
 export const CodeUpdater = {
