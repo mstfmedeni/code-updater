@@ -14,30 +14,37 @@ export const semverSatisfies = (
     return false;
   }
 
-  const isExactVersion = currentCoerce.version === targetCoerce.version;
+  // Check if versions match according to semver rules (handles ranges and x patterns)
+  const isVersionMatch = semver.satisfies(currentCoerce.version, targetBase);
 
-  if (isExactVersion) {
-    const targetBuildStr = targetBuild || "0";
-    const currentBuildStr = currentBuild || "0";
-
-    if (targetBuildStr.includes("x")) {
-      const pattern = targetBuildStr
-        .replace(/x/gi, "\\d")
-        .replace(/\d/g, (match) => match);
-
-      const regex = new RegExp(`^${pattern}$`);
-      return regex.test(currentBuildStr);
-    }
-
-    const targetBuildNum = Number.parseInt(targetBuildStr, 10);
-    const currentBuildNum = Number.parseInt(currentBuildStr, 10);
-
-    if (Number.isNaN(targetBuildNum) || Number.isNaN(currentBuildNum)) {
-      return false;
-    }
-
-    return currentBuildNum === targetBuildNum;
+  if (!isVersionMatch) {
+    return false;
   }
 
-  return semver.satisfies(currentCoerce.version, targetBase);
+  // If target version doesn't have a build number, ignore build numbers and return true
+  if (!targetBuild) {
+    return true;
+  }
+
+  // Otherwise, compare build numbers
+  const targetBuildStr = targetBuild || "0";
+  const currentBuildStr = currentBuild || "0";
+
+  if (targetBuildStr.includes("x")) {
+    const pattern = targetBuildStr
+      .replace(/x/gi, "\\d")
+      .replace(/\d/g, (match) => match);
+
+    const regex = new RegExp(`^${pattern}$`);
+    return regex.test(currentBuildStr);
+  }
+
+  const targetBuildNum = Number.parseInt(targetBuildStr, 10);
+  const currentBuildNum = Number.parseInt(currentBuildStr, 10);
+
+  if (Number.isNaN(targetBuildNum) || Number.isNaN(currentBuildNum)) {
+    return false;
+  }
+
+  return currentBuildNum === targetBuildNum;
 };

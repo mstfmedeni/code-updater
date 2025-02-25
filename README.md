@@ -105,30 +105,60 @@ export default defineConfig({
 ```
 
 
-## Behavior
+## Features
 
-1. **Version Comparison**: Compares semantic versions according to semver rules
-2. **Build Number Handling**: When versions are exactly the same, also compares build numbers
-3. **Pattern Matching**: Supports using "x" as a wildcard in build numbers (e.g., "10xx")
-4. **Default Values**: Missing build numbers default to "0"
+- Standard semver comparison
+- Build number support
+- Wildcard pattern matching for versions and build numbers
+- Range operator support (^, ~, >, <)
+- Special handling for build numbers in target versions
 
-## Examples
+## Behavior Matrix
 
-| Current Version | Target Version | Result | Explanation |
-|-----------------|---------------|--------|-------------|
-| `1.2.3+100` | `1.2.4` | `false` | Current version 1.2.3 is less than target 1.2.4 |
-| `1.2.3+100` | `^1.2.0` | `true` | Current version 1.2.3 satisfies the range ^1.2.0 |
-| `1.2.3+100` | `1.2.3+100` | `true` | Exact version and build number match |
-| `1.2.3+100` | `1.2.3+99` | `false` | Versions match but build numbers don't |
-| `1.2.3+1045` | `1.2.3+10xx` | `true` | Build number matches pattern 10xx |
-| `1.2.3` | `1.2.3+100` | `false` | Missing build number defaults to 0, doesn't match 100 |
-| `1.2.3+100` | `1.2.3` | `false` | Build number 100 doesn't match default 0 |
-| `1.2.3` | `1.2.3` | `true` | Both versions and default build numbers match |
+| Target Version | Current Version | Result | Explanation |
+|----------------|-----------------|--------|-------------|
+| **Exact Version Matching** |
+| `1.2.3` | `1.2.3` | ✅ | Exact version match |
+| `1.2.3` | `1.2.4` | ❌ | Exact version mismatch |
+| **Version with Build Numbers** |
+| `1.2.3+45` | `1.2.3+45` | ✅ | Exact version and build match |
+| `1.2.3+45` | `1.2.3+46` | ❌ | Same version, different build |
+| **Wildcard in Version** |
+| `1.2.x` | `1.2.3` | ✅ | Wildcard in patch version |
+| `1.2.x` | `1.2.3+45` | ✅ | Wildcard in patch version, build ignored |
+| `1.x.x` | `1.2.3` | ✅ | Wildcard in minor and patch |
+| `1.x.x` | `2.0.0` | ❌ | Wildcard but major version mismatch |
+| **Range Operators** |
+| `^1.2.3` | `1.2.3` | ✅ | Caret range exact match |
+| `^1.2.3` | `1.3.0` | ✅ | Caret range allows minor update |
+| `^1.2.3` | `2.0.0` | ❌ | Caret range disallows major update |
+| `~1.2.3` | `1.2.4` | ✅ | Tilde range allows patch update |
+| `~1.2.3` | `1.3.0` | ❌ | Tilde range disallows minor update |
+| **Range Operators with Build Numbers** |
+| `^1.2.3+45` | `1.3.0+45` | ✅ | Caret with build - version matches, builds must match too |
+| `^1.2.3+45` | `1.3.0+46` | ❌ | Caret with build - build mismatch |
+| **Build Number Wildcards** |
+| `1.2.3+4x` | `1.2.3+45` | ✅ | Wildcard in build number |
+| `1.2.3+x` | `1.2.3+5` | ✅ | Full wildcard in build |
+| `1.2.3+4x` | `1.2.3+5` | ❌ | Build wildcard mismatch |
+| `1.2.3+1xx` | `1.2.3+125` | ✅ | Wildcard in build number |
+| `1.2.3+44x` | `1.2.3+4455` | ❌ | Build wildcard mismatch |
+| `1.2.3+44x` | `1.2.3+445` | ✅ | Wildcard in build number |
 
-## Important Notes
+| **Special Cases** |
+| `1.2.3` | `1.2.3+45` | ✅ | Target with no build ignores current build |
+| `1.2.x` | `1.2.3+45` | ✅ | Wildcard version with no build ignores current build |
 
-1. For exact version matches, build numbers must match exactly (compared with `===`)
-2. When using semver ranges (^, ~, <, >), build numbers are ignored
-3. Pattern matching only applies when versions exactly match and target build contains "x"
-4. This function handles npm-style semver ranges in the targetAppVersion
+## Rules
 
+1. **Version Comparison**:
+   - First, check if the base versions match according to semver rules
+   - Handles wildcards (x) and range operators (^, ~, >, <, =)
+
+2. **Build Number Handling**:
+   - If target version doesn't have a build number, ignore the build number in current version
+   - Otherwise, build numbers must match exactly or follow wildcard patterns
+
+3. **Wildcards**:
+   - `x` in version sections acts as a wildcard (1.2.x matches 1.2.0, 1.2.1, etc.)
+   - `x` in build numbers acts as a single digit wildcard (1.2.3+4x matches 1.2.3+40, 1.2.3+45, etc.)
