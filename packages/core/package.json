@@ -1,6 +1,6 @@
 {
   "name": "@code-updater/core",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "type": "module",
   "description": "React Native OTA solution for self-hosted",
   "sideEffects": false,
