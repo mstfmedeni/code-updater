@@ -144,7 +144,6 @@ export default defineConfig({
 | `1.2.3+1xx` | `1.2.3+125` | ✅ | Wildcard in build number |
 | `1.2.3+44x` | `1.2.3+4455` | ❌ | Build wildcard mismatch |
 | `1.2.3+44x` | `1.2.3+445` | ✅ | Wildcard in build number |
-
 | **Special Cases** |
 | `1.2.3` | `1.2.3+45` | ✅ | Target with no build ignores current build |
 | `1.2.x` | `1.2.3+45` | ✅ | Wildcard version with no build ignores current build |
