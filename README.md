@@ -105,3 +105,30 @@ export default defineConfig({
 ```
 
 
+## Behavior
+
+1. **Version Comparison**: Compares semantic versions according to semver rules
+2. **Build Number Handling**: When versions are exactly the same, also compares build numbers
+3. **Pattern Matching**: Supports using "x" as a wildcard in build numbers (e.g., "10xx")
+4. **Default Values**: Missing build numbers default to "0"
+
+## Examples
+
+| Current Version | Target Version | Result | Explanation |
+|-----------------|---------------|--------|-------------|
+| `1.2.3+100` | `1.2.4` | `false` | Current version 1.2.3 is less than target 1.2.4 |
+| `1.2.3+100` | `^1.2.0` | `true` | Current version 1.2.3 satisfies the range ^1.2.0 |
+| `1.2.3+100` | `1.2.3+100` | `true` | Exact version and build number match |
+| `1.2.3+100` | `1.2.3+99` | `false` | Versions match but build numbers don't |
+| `1.2.3+1045` | `1.2.3+10xx` | `true` | Build number matches pattern 10xx |
+| `1.2.3` | `1.2.3+100` | `false` | Missing build number defaults to 0, doesn't match 100 |
+| `1.2.3+100` | `1.2.3` | `false` | Build number 100 doesn't match default 0 |
+| `1.2.3` | `1.2.3` | `true` | Both versions and default build numbers match |
+
+## Important Notes
+
+1. For exact version matches, build numbers must match exactly (compared with `===`)
+2. When using semver ranges (^, ~, <, >), build numbers are ignored
+3. Pattern matching only applies when versions exactly match and target build contains "x"
+4. This function handles npm-style semver ranges in the targetAppVersion
+
