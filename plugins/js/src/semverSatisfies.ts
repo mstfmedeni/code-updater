@@ -36,7 +36,7 @@ export const semverSatisfies = (
       return false;
     }
 
-    return currentBuildNum == targetBuildNum;
+    return currentBuildNum === targetBuildNum;
   }
 
   return semver.satisfies(currentCoerce.version, targetBase);
